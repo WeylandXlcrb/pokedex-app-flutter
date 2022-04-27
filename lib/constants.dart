@@ -1,0 +1,1 @@
+const kPaddingDefault = 16.0;
