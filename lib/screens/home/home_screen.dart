@@ -8,6 +8,7 @@ import 'package:pokedex_app/models/category.dart';
 import 'package:pokedex_app/screens/home/components/category_card.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = 'home';
   static const _pokeballFraction = 0.6;
 
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,7 +23,6 @@ class HomeScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     return Scaffold(
-
       body: Stack(
         fit: StackFit.expand,
         children: [

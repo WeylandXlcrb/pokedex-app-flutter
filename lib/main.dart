@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pokedex_app/screens/home/home_screen.dart';
+import 'package:pokedex_app/router.dart';
 import 'package:pokedex_app/theme.dart';
 
 void main() async {
@@ -14,10 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Pokedex',
       theme: appLightTheme(context),
-      home: const HomeScreen(),
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationParser: appRouter.routeInformationParser,
     );
   }
 }
