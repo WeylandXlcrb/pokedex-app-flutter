@@ -36,10 +36,19 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.3.2
   go_router: ^3.1.0
+  built_collection: ^5.1.1
+  built_value: ^8.2.3
+  http: ^0.13.4
+  hive: ^2.1.0
+  hive_flutter: ^1.1.0
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  built_value_generator: ^8.2.3
+  build_runner: ^2.1.10
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
