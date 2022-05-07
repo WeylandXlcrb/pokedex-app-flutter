@@ -9,17 +9,20 @@ abstract class ApiRequest {
 
   /// if set, will be used to check response status, otherwise
   /// [defaultSuccessCodes] is used
-  List<int>? get successCodes;
+  List<int>? successCodes;
 
-  /// Set after successful request;
+  /// Will be set after request is made
   http.Response? response;
 
   List<int> get _successCodes => successCodes ?? defaultSuccessCodes;
 
   Future<http.Response> request();
 
-  Future send() async {
+  /// Returns body of successful request, otherwise throws [HttpException]
+  Future<String> send() async {
     final res = await request();
+
+    response = res;
 
     if (!_successCodes.contains(res.statusCode)) {
       throw HttpException(
@@ -27,8 +30,6 @@ abstract class ApiRequest {
         message: res.toString(),
       );
     }
-
-    response = res;
 
     return res.body;
   }

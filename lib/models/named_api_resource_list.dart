@@ -16,7 +16,7 @@ abstract class NamedAPIResourceList
 
   String? get previous;
 
-  BuiltList<NamedAPIResource> get list;
+  BuiltList<NamedAPIResource> get results;
 
   NamedAPIResourceList._();
 
