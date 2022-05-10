@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
+import 'package:pokedex_app/screens/pokemons/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 
 class PokemonsScreen extends StatelessWidget {
@@ -25,15 +27,15 @@ class PokemonsScreen extends StatelessWidget {
             final data = snapshot.data!;
 
             return ListView.separated(
+              padding: const EdgeInsets.all(kPaddingDefault),
               itemCount: data.results.length,
-              separatorBuilder: (_, __) => const Divider(),
-              itemBuilder: (_, index) => ListTile(
-                title: Text(data.results[index].name),
-                subtitle: Text(data.results[index].url),
-              ),
+              separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+              itemBuilder: (_, index) =>
+                  PokemonCard(pokemonName: data.results[index].name),
             );
           }
 
+          // TODO: Change to custom progress indicator
           return const Center(
             child: CircularProgressIndicator(),
           );

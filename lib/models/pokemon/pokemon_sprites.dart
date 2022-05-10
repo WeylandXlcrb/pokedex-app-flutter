@@ -22,11 +22,11 @@ abstract class PokemonSprites
 
   /// The female depiction of this Pokémon from the front in battle.
   @BuiltValueField(wireName: 'front_female')
-  String get frontFemale;
+  String? get frontFemale;
 
   /// The shiny female depiction of this Pokémon from the front in battle.
   @BuiltValueField(wireName: 'front_shiny_female')
-  String get frontShinyFemale;
+  String? get frontShinyFemale;
 
   /// The default depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_default')
@@ -38,11 +38,11 @@ abstract class PokemonSprites
 
   /// The female depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_female')
-  String get backFemale;
+  String? get backFemale;
 
   /// The shiny female depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_shiny_female')
-  String get backShinyFemale;
+  String? get backShinyFemale;
 
   PokemonSprites._();
 

@@ -16,16 +16,27 @@ class PokemonsCache extends TimeBasedCache {
   String _getPokemonListCacheKey(int page, int limit) =>
       'Pokemons_page-${page}_limit-$limit';
 
+  String _getPokemonCacheKey(String name) => 'Pokemon-$name';
+
   Future<CachedData<String>?> getPokemonList({
     required int page,
     required int limit,
-  }) async =>
+  }) =>
       get<String>(_getPokemonListCacheKey(page, limit));
 
   Future<void> setPokemonList({
     required int page,
     required int limit,
     required String data,
-  }) async =>
+  }) =>
       put(_getPokemonListCacheKey(page, limit), data);
+
+  Future<CachedData<String>?> getPokemonByName({required String name}) async =>
+      get<String>(_getPokemonCacheKey(name));
+
+  Future<void> setPokemonByName({
+    required String name,
+    required String data,
+  }) =>
+      put(_getPokemonCacheKey(name), data);
 }

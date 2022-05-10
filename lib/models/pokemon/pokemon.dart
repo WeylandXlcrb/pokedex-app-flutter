@@ -80,6 +80,8 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder> {
   /// A list of details showing types this Pokémon has.
   BuiltList<PokemonType> get types;
 
+  String get hashedId => '#${id.toString().padLeft(3, '0')}';
+
   Pokemon._();
 
   factory Pokemon([void Function(PokemonBuilder) updates]) = _$Pokemon;

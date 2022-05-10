@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:pokedex_app/asset_images.dart';
 import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/models/category.dart';
-import 'package:pokedex_app/screens/home/components/category_card.dart';
+import 'package:pokedex_app/screens/home/widgets/category_card.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = 'home';
