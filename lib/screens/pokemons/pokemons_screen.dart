@@ -27,7 +27,7 @@ class PokemonsScreen extends StatelessWidget {
             final data = snapshot.data!;
 
             return ListView.separated(
-              padding: const EdgeInsets.all(kPaddingDefault),
+              padding: const EdgeInsets.all(kPaddingDefault * 1.5),
               itemCount: data.results.length,
               separatorBuilder: (_, __) => const SizedBox(height: 16.0),
               itemBuilder: (_, index) =>
