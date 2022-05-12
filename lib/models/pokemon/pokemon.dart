@@ -6,7 +6,7 @@ import 'package:pokedex_app/models/named_api_resource.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_ability.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_held_item.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move.dart';
-import 'package:pokedex_app/models/pokemon/pokemon_sprites.dart';
+import 'package:pokedex_app/models/pokemon/sprite/pokemon_sprites.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_stat.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type_past.dart';

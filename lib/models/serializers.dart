@@ -10,7 +10,10 @@ import 'package:pokedex_app/models/pokemon/pokemon_held_item.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_held_item_version.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move_version.dart';
-import 'package:pokedex_app/models/pokemon/pokemon_sprites.dart';
+import 'package:pokedex_app/models/pokemon/sprite/front_and_shiny_sprites.dart';
+import 'package:pokedex_app/models/pokemon/sprite/front_sprites.dart';
+import 'package:pokedex_app/models/pokemon/sprite/other_sprites.dart';
+import 'package:pokedex_app/models/pokemon/sprite/pokemon_sprites.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_stat.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type_past.dart';
@@ -32,6 +35,9 @@ part 'serializers.g.dart';
   PokemonTypePast,
   PokemonSprites,
   PokemonStat,
+  FrontSprites,
+  FrontAndShinySprites,
+  OtherSprites,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

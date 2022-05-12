@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/extensions/string.dart';
+import 'package:pokedex_app/widgets/type_badge.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -20,7 +24,7 @@ class PokemonCard extends StatefulWidget {
 }
 
 class _PokemonCardState extends State<PokemonCard> {
-  static const _cardHeight = 100.0;
+  static const _cardHeight = 110.0;
   static const _transitionDuration = Duration(milliseconds: 400);
   var _isLoading = true;
   Pokemon? _pokemon;
@@ -69,14 +73,19 @@ class _PokemonCardState extends State<PokemonCard> {
             duration: _transitionDuration,
             curve: Curves.easeInOut,
             decoration: BoxDecoration(
-              color: _pokemon == null ? Colors.blueGrey : Colors.lightGreen,
+              color: _pokemon == null
+                  ? Colors.blueGrey
+                  : Color.alphaBlend(
+                      Colors.grey.shade300.withOpacity(0.2),
+                      _pokemon!.types.first.color,
+                    ),
               borderRadius: BorderRadius.circular(8.0),
               boxShadow: [
                 BoxShadow(
                   color: _pokemon == null
                       ? Colors.blueGrey.withOpacity(0.3)
-                      : Colors.lightGreen.withOpacity(0.3),
-                  offset: const Offset(0, 8),
+                      : _pokemon!.types.first.color.withOpacity(0.3),
+                  offset: const Offset(0, 6),
                   blurRadius: 6.0,
                 ),
               ],
@@ -106,36 +115,73 @@ class _PokemonCardState extends State<PokemonCard> {
                       AssetImages.pokeball,
                       width: pokeballSize,
                       height: pokeballSize,
-                      color: Colors.white.withOpacity(0.06),
+                      color: Colors.white.withOpacity(0.07),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(kPaddingDefault),
-                    child: _hasError
-                        ? const Center(
-                            child: Text('Error'),
-                          )
-                        : _pokemon != null
-                            ? Center(
-                                child: Text(
-                                    '${_pokemon!.name}-${_pokemon!.hashedId}'),
-                              )
-                            : const Center(
-                                child: Text('LOADING...'),
-                              ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DefaultTextStyle.merge(
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            color: Colors.black54,
+                          ),
+                          child: AnimatedCrossFade(
+                            firstChild: const Text('#xxx'),
+                            secondChild: Text(_pokemon?.hashedId ?? ''),
+                            duration: _transitionDuration,
+                            crossFadeState: _pokemon != null
+                                ? CrossFadeState.showSecond
+                                : CrossFadeState.showFirst,
+                          ),
+                        ),
+                        DefaultTextStyle.merge(
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.5,
+                          ),
+                          child: AnimatedCrossFade(
+                            firstChild: const Text('-------'),
+                            secondChild:
+                                Text(_pokemon?.name.capitalize() ?? ''),
+                            duration: _transitionDuration,
+                            crossFadeState: _pokemon != null
+                                ? CrossFadeState.showSecond
+                                : CrossFadeState.showFirst,
+                          ),
+                        ),
+                        if (_pokemon != null)
+                          Row(
+                            children: [
+                              for (final type in _pokemon!.types.sublist(
+                                  0, min(2, _pokemon!.types.length))) ...[
+                                TypeBadge(type: type),
+                                const SizedBox(width: 4),
+                              ]
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           Positioned(
-            top: -imageSize * 0.125,
+            top: -imageSize * 0.15,
             right: 0,
             child: AnimatedCrossFade(
               firstChild: _isLoading
                   ? _placeholderImage
                   : CachedNetworkImage(
-                      imageUrl: _pokemon!.sprites.frontDefault,
+                      imageUrl:
+                          _pokemon!.sprites.other.officialArtwork.frontDefault,
                       height: imageSize,
                       placeholder: (_, __) => _placeholderImage,
                       errorWidget: (_, __, ___) => _errorImage,
