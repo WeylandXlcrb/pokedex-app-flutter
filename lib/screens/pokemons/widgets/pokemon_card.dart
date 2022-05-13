@@ -71,6 +71,7 @@ class _PokemonCardState extends State<PokemonCard> {
         children: [
           AnimatedContainer(
             duration: _transitionDuration,
+            width: double.infinity,
             curve: Curves.easeInOut,
             decoration: BoxDecoration(
               color: _pokemon == null
