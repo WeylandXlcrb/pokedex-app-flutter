@@ -20,6 +20,28 @@ abstract class TypeParser {
         return TypeColors.bug;
       case 'normal':
         return TypeColors.normal;
+      case 'electric':
+        return TypeColors.electric;
+      case 'ground':
+        return TypeColors.ground;
+      case 'fairy':
+        return TypeColors.fairy;
+      case 'fighting':
+        return TypeColors.fighting;
+      case 'psychic':
+        return TypeColors.psychic;
+      case 'rock':
+        return TypeColors.rock;
+      case 'steel':
+        return TypeColors.steel;
+      case 'ghost':
+        return TypeColors.ghost;
+      case 'ice':
+        return TypeColors.ice;
+      case 'dragon':
+        return TypeColors.dragon;
+      case 'dark':
+        return TypeColors.dark;
       default:
         return Colors.blueGrey;
     }

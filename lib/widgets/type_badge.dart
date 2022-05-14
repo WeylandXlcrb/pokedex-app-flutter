@@ -18,6 +18,13 @@ class TypeBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: type.color,
         borderRadius: BorderRadius.circular(4.0),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0, 1),
+            blurRadius: 1.0,
+          ),
+        ],
       ),
       child: Text(
         type.name.capitalize(),

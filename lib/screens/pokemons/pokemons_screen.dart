@@ -130,15 +130,11 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
               index == itemCount - 1) {
             return const Padding(
               padding: EdgeInsets.all(16.0),
-              child: Center(
-                child: PokeballLoadingIndicator(),
-              ),
+              child: Center(child: PokeballLoadingIndicator()),
             );
           }
 
-          return PokemonCard(
-            pokemonName: _resourceList!.results[index].name,
-          );
+          return PokemonCard(pokemonName: _resourceList!.results[index].name);
         },
       );
     }

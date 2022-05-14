@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/extensions/string.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
 import 'package:pokedex_app/widgets/type_badge.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -30,6 +31,9 @@ class _PokemonCardState extends State<PokemonCard> {
   Pokemon? _pokemon;
   bool _hasError = false;
 
+  Iterable<PokemonType> get _pokemonTypesCapped =>
+      _pokemon?.types.sublist(0, min(2, _pokemon!.types.length)) ?? [];
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +61,31 @@ class _PokemonCardState extends State<PokemonCard> {
     }
   }
 
+  Color _dimColor(Color original) => Color.alphaBlend(
+        Colors.white70.withOpacity(0.1),
+        original,
+      );
+
+  Gradient _buildGradient() {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      stops: const [0.3, 2],
+      colors: [
+        if (_pokemonTypesCapped.length < 2)
+          ...List.generate(
+            2,
+            (_) => _dimColor(_pokemonTypesCapped.isEmpty
+                ? Colors.blueGrey
+                : _pokemonTypesCapped.first.color),
+          )
+        else ...[
+          for (final type in _pokemonTypesCapped) _dimColor(type.color),
+        ]
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const pokeballSize = _cardHeight * 1.5;
@@ -74,12 +103,7 @@ class _PokemonCardState extends State<PokemonCard> {
             width: double.infinity,
             curve: Curves.easeInOut,
             decoration: BoxDecoration(
-              color: _pokemon == null
-                  ? Colors.blueGrey
-                  : Color.alphaBlend(
-                      Colors.grey.shade300.withOpacity(0.2),
-                      _pokemon!.types.first.color,
-                    ),
+              gradient: _buildGradient(),
               borderRadius: BorderRadius.circular(8.0),
               boxShadow: [
                 BoxShadow(
@@ -160,8 +184,7 @@ class _PokemonCardState extends State<PokemonCard> {
                         if (_pokemon != null)
                           Row(
                             children: [
-                              for (final type in _pokemon!.types.sublist(
-                                  0, min(2, _pokemon!.types.length))) ...[
+                              for (final type in _pokemonTypesCapped) ...[
                                 TypeBadge(type: type),
                                 const SizedBox(width: 4),
                               ]
