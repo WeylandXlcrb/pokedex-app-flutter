@@ -14,10 +14,12 @@ import 'package:pokedex_app/repos/pokemons_repo.dart';
 
 class PokemonCard extends StatefulWidget {
   final String pokemonName;
+  final VoidCallback? onTap;
 
   const PokemonCard({
     Key? key,
     required this.pokemonName,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -216,6 +218,9 @@ class _PokemonCardState extends State<PokemonCard> {
                   : CrossFadeState.showFirst,
             ),
           ),
+          // Added here only to not increase indentation level, can
+          // wrap whole widget as well
+          GestureDetector(onTap: _pokemon != null ? widget.onTap : null),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:pokedex_app/screens/home/home_screen.dart';
 import 'package:pokedex_app/screens/items/items_screen.dart';
 import 'package:pokedex_app/screens/locations/locations_screen.dart';
 import 'package:pokedex_app/screens/moves/moves_screen.dart';
+import 'package:pokedex_app/screens/pokemon_details/pokemon_details_screen.dart';
 import 'package:pokedex_app/screens/pokemons/pokemons_screen.dart';
 
 final appRouter = GoRouter(
@@ -19,6 +20,15 @@ final appRouter = GoRouter(
           path: 'pokemons',
           name: PokemonsScreen.routeName,
           builder: (context, state) => const PokemonsScreen(),
+          routes: [
+            GoRoute(
+              path: ':name',
+              name: PokemonDetailsScreen.routeName,
+              builder: (context, state) => PokemonDetailsScreen(
+                pokemonName: state.params['name']!,
+              ),
+            ),
+          ],
         ),
         GoRoute(
           path: 'moves',
