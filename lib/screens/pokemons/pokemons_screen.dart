@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/widgets/pokeball_loading_indicator.dart';
 import 'package:provider/provider.dart';
 
+import 'package:pokedex_app/colors.dart';
 import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/enums/pagination_state.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
 import 'package:pokedex_app/screens/pokemons/widgets/pokemon_card.dart';
+import 'package:pokedex_app/widgets/pokeball_loading_indicator.dart';
 
 class PokemonsScreen extends StatefulWidget {
   static const routeName = 'pokemons';
@@ -140,7 +141,11 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Pokemons'),
+        backgroundColor: CategoryColors.pokemons,
+        elevation: 0,
+      ),
       body: body,
     );
   }

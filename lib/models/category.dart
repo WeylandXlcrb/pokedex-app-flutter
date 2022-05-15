@@ -1,4 +1,6 @@
 import 'package:flutter/painting.dart';
+
+import 'package:pokedex_app/colors.dart';
 import 'package:pokedex_app/screens/evolutions/evolutions_screen.dart';
 import 'package:pokedex_app/screens/items/items_screen.dart';
 import 'package:pokedex_app/screens/locations/locations_screen.dart';
@@ -20,27 +22,27 @@ class Category {
     Category(
       name: 'Pokemons',
       routeName: PokemonsScreen.routeName,
-      color: Color.fromRGBO(225, 73, 67, 1),
+      color: CategoryColors.pokemons,
     ),
     Category(
       name: 'Moves',
       routeName: MovesScreen.routeName,
-      color: Color.fromRGBO(230, 162, 70, 1),
+      color: CategoryColors.moves,
     ),
     Category(
       name: 'Evolutions',
       routeName: EvolutionsScreen.routeName,
-      color: Color.fromRGBO(90, 176, 137, 1),
+      color: CategoryColors.evolutions,
     ),
     Category(
       name: 'Locations',
       routeName: LocationsScreen.routeName,
-      color: Color.fromRGBO(107, 173, 219, 1),
+      color: CategoryColors.locations,
     ),
     Category(
       name: 'Items',
       routeName: ItemsScreen.routeName,
-      color: Color.fromRGBO(148, 72, 227, 1.0),
+      color: CategoryColors.items,
     ),
   ];
 }

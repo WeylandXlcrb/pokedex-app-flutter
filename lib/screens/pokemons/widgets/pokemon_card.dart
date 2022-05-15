@@ -26,7 +26,7 @@ class PokemonCard extends StatefulWidget {
 
 class _PokemonCardState extends State<PokemonCard> {
   static const _cardHeight = 110.0;
-  static const _transitionDuration = Duration(milliseconds: 400);
+  static const _transitionDuration = Duration(milliseconds: 500);
   var _isLoading = true;
   Pokemon? _pokemon;
   bool _hasError = false;
@@ -155,13 +155,11 @@ class _PokemonCardState extends State<PokemonCard> {
                             fontSize: 12.0,
                             color: Colors.black54,
                           ),
-                          child: AnimatedCrossFade(
-                            firstChild: const Text('#xxx'),
-                            secondChild: Text(_pokemon?.hashedId ?? ''),
+                          child: TweenAnimationBuilder<int>(
+                            tween: IntTween(begin: 0, end: _pokemon?.id ?? 0),
                             duration: _transitionDuration,
-                            crossFadeState: _pokemon != null
-                                ? CrossFadeState.showSecond
-                                : CrossFadeState.showFirst,
+                            builder: (_, id, __) =>
+                                Text('#${'$id'.padLeft(3, '0')}'),
                           ),
                         ),
                         DefaultTextStyle.merge(
