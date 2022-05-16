@@ -43,9 +43,14 @@ abstract class TypeParser {
       case 'dark':
         return TypeColors.dark;
       default:
-        return Colors.blueGrey;
+        return TypeColors.unknown;
     }
   }
+
+  Color get dimColor => Color.alphaBlend(
+        Colors.white.withOpacity(0.1),
+        color,
+      );
 
 // TODO: implement icons getter
 }

@@ -104,10 +104,10 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
       body = Center(
         child: Column(
           children: [
-            const Text('Произошла ошибка'),
+            const Text('An error has occurred'),
             TextButton(
               onPressed: _fetchPokemons,
-              child: const Text('Повторить'),
+              child: const Text('Try again'),
             ),
           ],
         ),

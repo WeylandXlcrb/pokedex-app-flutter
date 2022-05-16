@@ -1,16 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/extensions/string.dart';
-import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
-import 'package:pokedex_app/widgets/type_badge.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:pokedex_app/asset_images.dart';
+import 'package:pokedex_app/colors.dart';
 import 'package:pokedex_app/constants.dart';
+import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
+import 'package:pokedex_app/widgets/type_badge.dart';
 
 class PokemonCard extends StatefulWidget {
   final String pokemonName;
@@ -33,8 +32,7 @@ class _PokemonCardState extends State<PokemonCard> {
   Pokemon? _pokemon;
   bool _hasError = false;
 
-  Iterable<PokemonType> get _pokemonTypesCapped =>
-      _pokemon?.types.sublist(0, min(2, _pokemon!.types.length)) ?? [];
+  Iterable<PokemonType> get _typesCapped => _pokemon?.typesCapped() ?? [];
 
   @override
   void initState() {
@@ -63,26 +61,21 @@ class _PokemonCardState extends State<PokemonCard> {
     }
   }
 
-  Color _dimColor(Color original) => Color.alphaBlend(
-        Colors.white70.withOpacity(0.1),
-        original,
-      );
-
   Gradient _buildGradient() {
     return LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       stops: const [0.3, 2],
       colors: [
-        if (_pokemonTypesCapped.length < 2)
+        if (_typesCapped.length < kDefaultTypeLengthCap)
           ...List.generate(
             2,
-            (_) => _dimColor(_pokemonTypesCapped.isEmpty
-                ? Colors.blueGrey
-                : _pokemonTypesCapped.first.color),
+            (_) => _typesCapped.isEmpty
+                ? TypeColors.unknown
+                : _typesCapped.first.dimColor,
           )
         else ...[
-          for (final type in _pokemonTypesCapped) _dimColor(type.color),
+          for (final type in _typesCapped) type.dimColor,
         ]
       ],
     );
@@ -109,9 +102,8 @@ class _PokemonCardState extends State<PokemonCard> {
               borderRadius: BorderRadius.circular(8.0),
               boxShadow: [
                 BoxShadow(
-                  color: _pokemon == null
-                      ? Colors.blueGrey.withOpacity(0.3)
-                      : _pokemon!.types.first.color.withOpacity(0.3),
+                  color: (_pokemon?.types.first.color ?? TypeColors.unknown)
+                      .withOpacity(0.3),
                   offset: const Offset(0, 6),
                   blurRadius: 6.0,
                 ),
@@ -184,7 +176,7 @@ class _PokemonCardState extends State<PokemonCard> {
                         if (_pokemon != null)
                           Row(
                             children: [
-                              for (final type in _pokemonTypesCapped) ...[
+                              for (final type in _typesCapped) ...[
                                 TypeBadge(type: type),
                                 const SizedBox(width: 4),
                               ]

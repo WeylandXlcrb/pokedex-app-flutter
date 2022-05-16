@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:pokedex_app/constants.dart';
 
 import 'package:pokedex_app/models/named_api_resource.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_ability.dart';
@@ -81,6 +84,11 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder> {
   BuiltList<PokemonType> get types;
 
   String get hashedId => '#${id.toString().padLeft(3, '0')}';
+
+  /// Returns first 'n' types of pokemon as iterable or whole [types] list if
+  /// specified length is greater than original [types] list
+  BuiltList<PokemonType> typesCapped([int length = kDefaultTypeLengthCap]) =>
+      types.sublist(0, min(length, types.length));
 
   Pokemon._();
 

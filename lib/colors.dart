@@ -19,6 +19,7 @@ abstract class TypeColors {
   static const ice = Color(0xFF7ECBC0);
   static const dragon = Color(0xFF3068BA);
   static const dark = Color(0xFF58575E);
+  static const unknown = Color(0xFF607D8B);
 }
 
 abstract class CategoryColors {
