@@ -7,6 +7,7 @@ abstract class TimeBasedCache {
 
   Duration get cacheDuration;
 
+  // TODO: add lookup for *_cachedAt keys end delete data if its expired
   Future<void> init() async {
     box = await Hive.openLazyBox(boxName);
   }

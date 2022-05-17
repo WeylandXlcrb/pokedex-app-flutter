@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:pokedex_app/asset_images.dart';
 import 'package:pokedex_app/colors.dart';
@@ -9,6 +8,7 @@ import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
+import 'package:pokedex_app/widgets/pokemon_image.dart';
 import 'package:pokedex_app/widgets/type_badge.dart';
 
 class PokemonCard extends StatefulWidget {
@@ -28,7 +28,6 @@ class PokemonCard extends StatefulWidget {
 class _PokemonCardState extends State<PokemonCard> {
   static const _cardHeight = 110.0;
   static const _transitionDuration = Duration(milliseconds: 500);
-  var _isLoading = true;
   Pokemon? _pokemon;
   bool _hasError = false;
 
@@ -56,8 +55,6 @@ class _PokemonCardState extends State<PokemonCard> {
     } catch (err) {
       print(err.toString());
       setState(() => _hasError = true);
-    } finally {
-      setState(() => _isLoading = false);
     }
   }
 
@@ -85,8 +82,6 @@ class _PokemonCardState extends State<PokemonCard> {
   Widget build(BuildContext context) {
     const pokeballSize = _cardHeight * 1.5;
     const imageSize = _cardHeight * 1.2;
-    const _placeholderImage = _PlaceholderImage(imageSize: imageSize);
-    const _errorImage = _ErrorImage(imageSize: imageSize);
 
     return SizedBox(
       height: _cardHeight,
@@ -176,10 +171,11 @@ class _PokemonCardState extends State<PokemonCard> {
                         if (_pokemon != null)
                           Row(
                             children: [
-                              for (final type in _typesCapped) ...[
-                                TypeBadge(type: type),
-                                const SizedBox(width: 4),
-                              ]
+                              for (final type in _typesCapped)
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4.0),
+                                  child: TypeBadge(type: type),
+                                ),
                             ],
                           ),
                       ],
@@ -192,22 +188,11 @@ class _PokemonCardState extends State<PokemonCard> {
           Positioned(
             top: -imageSize * 0.15,
             right: 0,
-            child: AnimatedCrossFade(
-              firstChild: _isLoading
-                  ? _placeholderImage
-                  : CachedNetworkImage(
-                      imageUrl:
-                          _pokemon!.sprites.other.officialArtwork.frontDefault,
-                      height: imageSize,
-                      placeholder: (_, __) => _placeholderImage,
-                      errorWidget: (_, __, ___) => _errorImage,
-                      fit: BoxFit.contain,
-                    ),
-              secondChild: _errorImage,
+            child: PokemonImage(
+              pokemon: _pokemon,
               duration: _transitionDuration,
-              crossFadeState: _hasError
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
+              imageSize: imageSize,
+              hasError: _hasError,
             ),
           ),
           // Added here only to not increase indentation level, can
@@ -215,46 +200,6 @@ class _PokemonCardState extends State<PokemonCard> {
           GestureDetector(onTap: _pokemon != null ? widget.onTap : null),
         ],
       ),
-    );
-  }
-}
-
-class _PlaceholderImage extends StatelessWidget {
-  final double imageSize;
-
-  const _PlaceholderImage({
-    Key? key,
-    required this.imageSize,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: imageSize,
-      child: Center(
-        child: Image.asset(
-          AssetImages.questionMark,
-          color: Colors.black26,
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorImage extends StatelessWidget {
-  final double imageSize;
-
-  const _ErrorImage({
-    Key? key,
-    required this.imageSize,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      Icons.warning,
-      size: imageSize,
-      color: Colors.black26,
     );
   }
 }

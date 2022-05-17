@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:pokedex_app/asset_images.dart';
+import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
+import 'package:pokedex_app/widgets/pokemon_image.dart';
 import 'package:pokedex_app/widgets/pokeball_loading_indicator.dart';
+import 'package:pokedex_app/widgets/stroke_fade_out_text.dart';
+import 'package:pokedex_app/widgets/type_badge.dart';
 
 class PokemonDetailsScreen extends StatelessWidget {
   static const routeName = 'pokemon-details';
@@ -103,32 +108,21 @@ class _PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final shrinkOpacity = shrinkOffset / maxExtent;
+    final extendedOpactity = 1 - shrinkOffset / maxExtent;
+
     return Stack(
       children: [
-        Padding(
-          padding: EdgeInsets.only(top: topPadding + 20),
-          child: FittedBox(
-            fit: BoxFit.none,
-            alignment: Alignment.center,
-            child: ShaderMask(
-              shaderCallback: (rect) => LinearGradient(
-                colors: [
-                  Colors.white,
-                  Colors.white.withOpacity(0),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0, 0.75],
-              ).createShader(rect),
-              child: Text(
-                pokemon.name.toUpperCase(),
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.25,
-                  foreground: Paint()
-                    ..color = Colors.white
-                    ..strokeWidth = 1
-                    ..style = PaintingStyle.stroke,
-                ),
+        Opacity(
+          opacity: extendedOpactity,
+          child: Padding(
+            padding: EdgeInsets.only(top: topPadding + 30),
+            child: FittedBox(
+              fit: BoxFit.none,
+              alignment: Alignment.center,
+              child: StrokeFadeOutText(
+                text: pokemon.name.toUpperCase(),
+                fontSize: MediaQuery.of(context).size.width * 0.25,
               ),
             ),
           ),
@@ -137,9 +131,100 @@ class _PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Opacity(
-            opacity: shrinkOffset / maxExtent,
+            opacity: shrinkOpacity,
             child: Text(pokemon.name.capitalize()),
           ),
+        ),
+        Opacity(
+          opacity: extendedOpactity,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: kPaddingDefault * 1.5,
+              ),
+              child: _PokemonRow(pokemon: pokemon),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PokemonRow extends StatelessWidget {
+  static const _imageSize = 130.0;
+
+  final Pokemon pokemon;
+
+  const _PokemonRow({
+    Key? key,
+    required this.pokemon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox.square(
+          dimension: _imageSize,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ShaderMask(
+                shaderCallback: (rect) => LinearGradient(
+                  colors: [
+                    Colors.white.withOpacity(0),
+                    Colors.white38,
+                  ],
+                  end: Alignment.bottomCenter,
+                ).createShader(rect),
+                child: Image.asset(
+                  AssetImages.pokeball,
+                  height: _imageSize * 0.9,
+                  color: Colors.white,
+                ),
+              ),
+              PokemonImage(
+                pokemon: pokemon,
+                duration: const Duration(milliseconds: 300),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 16.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              pokemon.hashedId,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12.0,
+                color: Colors.black54,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              pokemon.name.capitalize(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                for (final type in pokemon.typesCapped())
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4.0),
+                    child: TypeBadge(type: type),
+                  ),
+              ],
+            )
+          ],
         ),
       ],
     );
