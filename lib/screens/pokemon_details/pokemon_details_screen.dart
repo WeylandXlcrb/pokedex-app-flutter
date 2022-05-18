@@ -76,6 +76,18 @@ class _ScreenBody extends StatelessWidget {
                 topPadding: MediaQuery.of(context).padding.top,
                 pokemon: pokemon,
               ),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              fillOverscroll: true,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(16.0),
+                  ),
+                ),
+              ),
             )
           ],
         )
@@ -94,7 +106,7 @@ class _PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   });
 
   @override
-  double get maxExtent => 400.0;
+  double get maxExtent => 300.0;
 
   @override
   double get minExtent => kToolbarHeight + topPadding;
@@ -116,7 +128,7 @@ class _PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         Opacity(
           opacity: extendedOpactity,
           child: Padding(
-            padding: EdgeInsets.only(top: topPadding + 30),
+            padding: EdgeInsets.only(top: topPadding + 15),
             child: FittedBox(
               fit: BoxFit.none,
               alignment: Alignment.center,
@@ -135,14 +147,32 @@ class _PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             child: Text(pokemon.name.capitalize()),
           ),
         ),
-        Opacity(
-          opacity: extendedOpactity,
-          child: Center(
+        Positioned(
+          top: topPadding + 70,
+          child: Opacity(
+            opacity: extendedOpactity,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: kPaddingDefault * 1.5,
               ),
               child: _PokemonRow(pokemon: pokemon),
+            ),
+          ),
+        ),
+        const Align(
+          alignment: Alignment.bottomCenter,
+          child: DefaultTabController(
+            length: 3,
+            child: TabBar(
+              tabs: [
+                Tab(text: 'About'),
+                Tab(text: 'Stats'),
+                Tab(text: 'Evolution'),
+              ],
+              // TODO: make custom indicator
+              indicatorColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 4,
             ),
           ),
         ),
