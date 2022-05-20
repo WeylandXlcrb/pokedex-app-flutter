@@ -11,5 +11,6 @@ ThemeData appLightTheme(BuildContext context) {
   return ThemeData(
     primarySwatch: Colors.blue,
     textTheme: _buildTextTheme(context),
+    scaffoldBackgroundColor: Colors.white,
   );
 }

@@ -85,6 +85,15 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder> {
 
   String get hashedId => '#${id.toString().padLeft(3, '0')}';
 
+  /// The height of the Pokémon in centimeters.
+  int get heightInCm => height * 10;
+
+  /// The height of the Pokémon in meters.
+  double get heightInM => height / 10;
+
+  /// The weight of this Pokémon in kilograms.
+  double get weightInKg => weight / 10;
+
   /// Returns first 'n' types of pokemon as iterable or whole [types] list if
   /// specified length is greater than original [types] list
   BuiltList<PokemonType> typesCapped([int length = kDefaultTypeLengthCap]) =>
