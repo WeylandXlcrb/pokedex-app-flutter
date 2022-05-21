@@ -72,7 +72,7 @@ class _ScreenBodyState extends State<_ScreenBody>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 3,
+      length: 4,
       vsync: this,
       initialIndex: 0,
     );
@@ -105,6 +105,7 @@ class _ScreenBodyState extends State<_ScreenBody>
         controller: _tabController,
         children: [
           PokemonAboutTab(pokemon: _pokemon),
+          const PokemonStatsTab(),
           const PokemonStatsTab(),
           const PokemonEvolutionTab(),
         ],
