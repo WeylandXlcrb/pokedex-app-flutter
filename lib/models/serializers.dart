@@ -2,14 +2,22 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
+import 'package:pokedex_app/models/api_resource.dart';
+import 'package:pokedex_app/models/description.dart';
+import 'package:pokedex_app/models/flavor_text.dart';
+import 'package:pokedex_app/models/name.dart';
 import 'package:pokedex_app/models/named_api_resource.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
+import 'package:pokedex_app/models/pokemon/genus.dart';
+import 'package:pokedex_app/models/pokemon/pal_park_encounter_area.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_ability.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_held_item.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_held_item_version.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move_version.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_species_dex_entry.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_species_variety.dart';
 import 'package:pokedex_app/models/pokemon/sprite/front_and_shiny_sprites.dart';
 import 'package:pokedex_app/models/pokemon/sprite/front_sprites.dart';
 import 'package:pokedex_app/models/pokemon/sprite/other_sprites.dart';
@@ -22,11 +30,17 @@ import 'package:pokedex_app/models/version_game_index.dart';
 part 'serializers.g.dart';
 
 @SerializersFor([
+  // COMMON
+  APIResource,
+  Description,
+  FlavorText,
   NamedAPIResource,
   NamedAPIResourceList,
+  Name,
+  VersionGameIndex,
+  // POKEMON
   Pokemon,
   PokemonAbility,
-  VersionGameIndex,
   PokemonHeldItemVersion,
   PokemonHeldItem,
   PokemonMoveVersion,
@@ -38,6 +52,10 @@ part 'serializers.g.dart';
   FrontSprites,
   FrontAndShinySprites,
   OtherSprites,
+  PokemonSpeciesDexEntry,
+  PalParkEncounterArea,
+  Genus,
+  PokemonSpeciesVariety,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

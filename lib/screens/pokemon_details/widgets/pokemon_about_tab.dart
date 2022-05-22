@@ -61,6 +61,14 @@ class PokemonAboutTab extends StatelessWidget {
         ),
         _sectionSpacing,
         _Section(
+          title: 'Locations',
+          color: pokemon.types.first.color,
+          children: const [
+            Text('TODO'),
+          ],
+        ),
+        _sectionSpacing,
+        _Section(
           title: 'Abilities',
           subtitle: 'An Ability provides a passive effect in battle or in '
               'the overworld. Individual Pokémon may have only one '

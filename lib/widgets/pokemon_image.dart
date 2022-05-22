@@ -28,21 +28,21 @@ class PokemonImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _placeholderImage = _PlaceholderImage(imageSize: imageSize);
-    final _errorImage = _ErrorImage(imageSize: imageSize);
+    final placeholderImage = _PlaceholderImage(imageSize: imageSize);
+    final errorImage = _ErrorImage(imageSize: imageSize);
 
     return AnimatedCrossFade(
       firstChild: pokemon == null
-          ? _placeholderImage
+          ? placeholderImage
           : CachedNetworkImage(
               imageUrl: pokemon!.sprites.other.officialArtwork.frontDefault,
               height: imageSize,
-              placeholder: (_, __) => _placeholderImage,
-              errorWidget: (_, __, ___) => _errorImage,
+              placeholder: (_, __) => placeholderImage,
+              errorWidget: (_, __, ___) => errorImage,
               fit: BoxFit.contain,
               fadeInDuration: duration,
             ),
-      secondChild: _errorImage,
+      secondChild: errorImage,
       duration: duration,
       crossFadeState:
           hasError ? CrossFadeState.showSecond : CrossFadeState.showFirst,
