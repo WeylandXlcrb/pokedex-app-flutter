@@ -123,6 +123,31 @@ abstract class PokemonSpecies
   /// A list of the Pokémon that exist within this Pokémon species.
   BuiltList<PokemonSpeciesVariety> get varieties;
 
+  /// Whether pokemon genderless or not
+  bool get isGenderless => genderRate == -1;
+
+  /// Gender Rate of females in percents
+  double get genderRateFemale => genderRate / 8 * 100;
+
+  /// Gender Rate of males in percents
+  double get genderRateMale => 100 - genderRateFemale;
+
+  /// Base capture rate in percents. The higher the number, the easier the catch.
+  double get captureRatePercent => captureRate / 255 * 100;
+
+  /// Default flavor text entry (first english or first overall)
+  /// for this Pokémon species.
+  FlavorText get flavorTextDefault => flavorTextEntries.firstWhere(
+        (f) => f.language.name == 'en',
+        orElse: () => flavorTextEntries.first,
+      );
+
+  /// Default genus (first english or first overall) of this Pokémon species.
+  Genus get genusDefault => genera.firstWhere(
+        (g) => g.language.name == 'en',
+        orElse: () => genera.first,
+      );
+
   PokemonSpecies._();
 
   factory PokemonSpecies([void Function(PokemonSpeciesBuilder) updates]) =

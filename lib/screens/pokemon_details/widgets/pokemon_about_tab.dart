@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/constants.dart';
+import 'package:provider/provider.dart';
 
+import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
+import 'package:pokedex_app/repos/pokemons_repo.dart';
 import 'package:pokedex_app/widgets/type_badge.dart';
 
 const _sectionSpacing = SliverToBoxAdapter(child: SizedBox(height: 16.0));
@@ -17,7 +20,6 @@ class PokemonAboutTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ABOUT TAB BUILD');
     return CustomScrollView(
       slivers: [
         // Required to not allow body scroll under sliver header
@@ -44,24 +46,10 @@ class PokemonAboutTab extends StatelessWidget {
           ],
         ),
         _sectionSpacing,
-        _Section(
-          title: 'Species Data',
-          color: pokemon.types.first.color,
-          children: const [
-            Text('TODO'),
-          ],
-        ),
+        _SpeciesDataSection(pokemon: pokemon),
         _sectionSpacing,
         _Section(
           title: 'Forms',
-          color: pokemon.types.first.color,
-          children: const [
-            Text('TODO'),
-          ],
-        ),
-        _sectionSpacing,
-        _Section(
-          title: 'Locations',
           color: pokemon.types.first.color,
           children: const [
             Text('TODO'),
@@ -119,6 +107,83 @@ class PokemonAboutTab extends StatelessWidget {
         ),
         _edgePadding,
       ],
+    );
+  }
+}
+
+class _SpeciesDataSection extends StatelessWidget {
+  final Pokemon pokemon;
+
+  const _SpeciesDataSection({
+    Key? key,
+    required this.pokemon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<PokemonSpecies>(
+      future: context.read<PokemonsRepo>().getSpeciesByName(pokemon.name),
+      builder: (_, snapshot) {
+        final List<Widget> children;
+
+        if (snapshot.hasError) {
+          children = [const Text('Unable to fetch data')];
+        } else if (snapshot.hasData) {
+          final species = snapshot.data!;
+
+          children = [
+            Text(
+              species.flavorTextDefault.text.replaceAll(RegExp(r'\n'), ' '),
+            ),
+            _DataRow(
+              labelText: 'Genus',
+              child: _DataTextValue(text: species.genusDefault.genus),
+            ),
+            _DataRow(
+              labelText: 'Base Happiness',
+              child: _DataTextValue(text: '${species.baseHappiness}'),
+            ),
+            if (species.isBaby) const _DataTextValue(text: 'Baby Pokemon'),
+            if (species.isLegendary) const _DataTextValue(text: 'Legendary'),
+            if (species.isMythical) const _DataTextValue(text: 'Mythical'),
+            _DataRow(
+              labelText: 'Gender Rate',
+              child: species.isGenderless
+                  ? const _DataTextValue(text: 'Genderless')
+                  : Row(
+                      children: [
+                        const Icon(Icons.female, color: Colors.pinkAccent),
+                        Text('${species.genderRateFemale}%'),
+                        const SizedBox(width: 8.0),
+                        const Icon(Icons.male, color: Colors.lightBlue),
+                        Text('${species.genderRateMale}%'),
+                      ],
+                    ),
+            ),
+            if (!species.isGenderless)
+              _DataRow(
+                labelText: 'Gender visual difference',
+                child: _DataTextValue(
+                  text: species.hasGenderDifferences ? 'Differ' : 'Identical',
+                ),
+              ),
+            _DataRow(
+              labelText: 'Capture Rate',
+              child: _DataTextValue(
+                text: '${species.captureRatePercent.toStringAsFixed(2)}%',
+              ),
+            ),
+          ];
+        } else {
+          children = [const _DataTextValue(text: 'Loading...')];
+        }
+
+        return _Section(
+          title: 'Species Data',
+          color: pokemon.types.first.color,
+          children: children,
+        );
+      },
     );
   }
 }

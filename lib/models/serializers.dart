@@ -16,6 +16,7 @@ import 'package:pokedex_app/models/pokemon/pokemon_held_item.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_held_item_version.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_move_version.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species_dex_entry.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species_variety.dart';
 import 'package:pokedex_app/models/pokemon/sprite/front_and_shiny_sprites.dart';
@@ -52,10 +53,12 @@ part 'serializers.g.dart';
   FrontSprites,
   FrontAndShinySprites,
   OtherSprites,
+  // POKEMON SPECIES
   PokemonSpeciesDexEntry,
   PalParkEncounterArea,
   Genus,
   PokemonSpeciesVariety,
+  PokemonSpecies,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
