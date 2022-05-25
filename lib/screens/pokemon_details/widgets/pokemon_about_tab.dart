@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/extensions/string.dart';
+import 'package:pokedex_app/models/pokemon/pokemon_ability.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pokedex_app/constants.dart';
+import 'package:pokedex_app/models/pokemon/ability.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
+import 'package:pokedex_app/widgets/pokeball_loading_indicator.dart';
 import 'package:pokedex_app/widgets/type_badge.dart';
 
 const _sectionSpacing = SliverToBoxAdapter(child: SizedBox(height: 16.0));
@@ -27,85 +31,195 @@ class PokemonAboutTab extends StatelessWidget {
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
         ),
         _edgePadding,
-        _Section(
-          title: 'Pokedex Data',
-          color: pokemon.types.first.color,
-          children: [
-            _DataRow(
-              labelText: 'Height',
-              child: _DataTextValue(text: '${pokemon.heightInCm}cm.'),
-            ),
-            _DataRow(
-              labelText: 'Weight',
-              child: _DataTextValue(text: '${pokemon.weightInKg}kg.'),
-            ),
-            _DataRow(
-              labelText: 'Base Experience',
-              child: _DataTextValue(text: '${pokemon.baseExperience}'),
-            ),
-          ],
-        ),
+        _PokedexDataSection(pokemon: pokemon),
         _sectionSpacing,
         _SpeciesDataSection(pokemon: pokemon),
         _sectionSpacing,
-        _Section(
-          title: 'Forms',
-          color: pokemon.types.first.color,
-          children: const [
-            Text('TODO'),
-          ],
-        ),
+        _AbilitiesSection(pokemon: pokemon),
         _sectionSpacing,
-        _Section(
-          title: 'Abilities',
-          subtitle: 'An Ability provides a passive effect in battle or in '
-              'the overworld. Individual Pokémon may have only one '
-              'Ability at a time.',
-          color: pokemon.types.first.color,
-          children: [
-            for (final pokeAbility in pokemon.abilities)
-              // TODO: normal widget (maybe some folding section?), add hidden indicator
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(pokeAbility.ability.name),
-              ),
-          ],
-        ),
+        _HeldItemsSection(pokemon: pokemon),
         _sectionSpacing,
-        _Section(
-          title: 'Held Items',
-          subtitle:
-              'A list of items this Pokémon may be holding when encountered.',
-          color: pokemon.types.first.color,
-          children: [
-            if (pokemon.heldItems.isNotEmpty)
-              for (final heldItem in pokemon.heldItems)
-                // TODO: normal widget
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(heldItem.item.name),
-                )
-            else
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: _DataTextValue(text: 'No Data Available...'),
-              )
-          ],
-        ),
-        _sectionSpacing,
-        _Section(
-          title: 'Types',
-          color: pokemon.types.first.color,
-          children: [
-            for (final type in pokemon.types)
-              // TODO: replace with detailed info
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TypeBadge(type: type),
-              )
-          ],
-        ),
+        _TypesSection(pokemon: pokemon),
         _edgePadding,
+      ],
+    );
+  }
+}
+
+class _TypesSection extends StatelessWidget {
+  const _TypesSection({
+    Key? key,
+    required this.pokemon,
+  }) : super(key: key);
+
+  final Pokemon pokemon;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Section(
+      title: 'Types',
+      color: pokemon.types.first.color,
+      children: [
+        for (final type in pokemon.types)
+          // TODO: replace with detailed info
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TypeBadge(type: type),
+          )
+      ],
+    );
+  }
+}
+
+class _HeldItemsSection extends StatelessWidget {
+  const _HeldItemsSection({
+    Key? key,
+    required this.pokemon,
+  }) : super(key: key);
+
+  final Pokemon pokemon;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Section(
+      title: 'Held Items',
+      subtitle: 'A list of items this Pokémon may be holding when encountered.',
+      color: pokemon.types.first.color,
+      children: [
+        if (pokemon.heldItems.isNotEmpty)
+          for (final heldItem in pokemon.heldItems)
+            // TODO: normal widget
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(heldItem.item.name),
+            )
+        else
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: _DataTextValue(text: 'No Data Available...'),
+          )
+      ],
+    );
+  }
+}
+
+class _AbilitiesSection extends StatelessWidget {
+  final Pokemon pokemon;
+
+  const _AbilitiesSection({
+    Key? key,
+    required this.pokemon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _Section(
+      title: 'Abilities',
+      subtitle: 'An Ability provides a passive effect in battle or in '
+          'the overworld. Individual Pokémon may have only one '
+          'Ability at a time.',
+      color: pokemon.types.first.color,
+      children: [
+        for (final pokeAbility in pokemon.abilities)
+          _AbilityTile(
+            pokeAbility: pokeAbility,
+            color: pokemon.types.first.color,
+          ),
+      ],
+    );
+  }
+}
+
+class _AbilityTile extends StatelessWidget {
+  final PokemonAbility pokeAbility;
+  final Color color;
+
+  const _AbilityTile({
+    Key? key,
+    required this.pokeAbility,
+    required this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      // If false, request is send only when tile is expanded, but it
+      // sends every time when expanded, if true, it sends all requests
+      // immediately, but only once
+      // maintainState: true,
+      title: Text(pokeAbility.ability.name.capitalize()),
+      collapsedIconColor: color,
+      iconColor: Colors.grey,
+      textColor: Colors.black,
+      tilePadding: EdgeInsets.zero,
+      children: [
+        FutureBuilder<Ability>(
+          future:
+              context.read<PokemonsRepo>().getAbility(pokeAbility.ability.name),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else if (snapshot.hasData) {
+              final ability = snapshot.data!;
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (pokeAbility.isHidden) ...[
+                      const Text(
+                        'Hidden ability',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8.0),
+                    ],
+                    Text(ability.effectDefault.effect),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      '"${ability.flavorTextDefault.text}"',
+                      style: const TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            return const Center(child: PokeballLoadingIndicator());
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _PokedexDataSection extends StatelessWidget {
+  const _PokedexDataSection({
+    Key? key,
+    required this.pokemon,
+  }) : super(key: key);
+
+  final Pokemon pokemon;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Section(
+      title: 'Pokedex Data',
+      color: pokemon.types.first.color,
+      children: [
+        _DataRow(
+          labelText: 'Height',
+          child: _DataTextValue(text: '${pokemon.heightInCm}cm.'),
+        ),
+        _DataRow(
+          labelText: 'Weight',
+          child: _DataTextValue(text: '${pokemon.weightInKg}kg.'),
+        ),
+        _DataRow(
+          labelText: 'Base Experience',
+          child: _DataTextValue(text: '${pokemon.baseExperience}'),
+        ),
       ],
     );
   }

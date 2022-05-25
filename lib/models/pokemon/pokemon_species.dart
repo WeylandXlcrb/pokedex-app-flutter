@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:pokedex_app/constants.dart';
 
 import 'package:pokedex_app/models/api_resource.dart';
 import 'package:pokedex_app/models/description.dart';
@@ -138,13 +139,13 @@ abstract class PokemonSpecies
   /// Default flavor text entry (first english or first overall)
   /// for this Pokémon species.
   FlavorText get flavorTextDefault => flavorTextEntries.firstWhere(
-        (f) => f.language.name == 'en',
+        (f) => f.language.name == kLanguageCodeDefault,
         orElse: () => flavorTextEntries.first,
       );
 
   /// Default genus (first english or first overall) of this Pokémon species.
   Genus get genusDefault => genera.firstWhere(
-        (g) => g.language.name == 'en',
+        (g) => g.language.name == kLanguageCodeDefault,
         orElse: () => genera.first,
       );
 
