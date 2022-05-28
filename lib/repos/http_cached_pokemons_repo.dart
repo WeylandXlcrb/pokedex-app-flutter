@@ -5,12 +5,14 @@ import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/models/pokemon/ability.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
+import 'package:pokedex_app/models/pokemon/type.dart';
 import 'package:pokedex_app/models/serializers.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
 import 'package:pokedex_app/requests/pokemons/ability_request.dart';
 import 'package:pokedex_app/requests/pokemons/pokemon_list_request.dart';
 import 'package:pokedex_app/requests/pokemons/pokemon_request.dart';
 import 'package:pokedex_app/requests/pokemons/pokemon_species_request.dart';
+import 'package:pokedex_app/requests/pokemons/type_request.dart';
 import 'package:pokedex_app/services/pokemons_cache.dart';
 
 class HttpCachedPokemonsRepo implements PokemonsRepo {
@@ -83,5 +85,20 @@ class HttpCachedPokemonsRepo implements PokemonsRepo {
     }
 
     return serializers.deserializeWith(Ability.serializer, json.decode(body))!;
+  }
+
+  @override
+  Future<TypeP> getType(String name) async {
+    final cachedData = await _cache.getType(name);
+    final String body;
+
+    if (cachedData?.isExpired != false) {
+      body = await TypeRequest(name: name).send();
+      _cache.setType(name: name, data: body);
+    } else {
+      body = cachedData!.data;
+    }
+
+    return serializers.deserializeWith(TypeP.serializer, json.decode(body))!;
   }
 }

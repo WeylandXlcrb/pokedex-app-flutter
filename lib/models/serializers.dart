@@ -6,6 +6,7 @@ import 'package:pokedex_app/models/api_resource.dart';
 import 'package:pokedex_app/models/description.dart';
 import 'package:pokedex_app/models/effect.dart';
 import 'package:pokedex_app/models/flavor_text.dart';
+import 'package:pokedex_app/models/generation_game_index.dart';
 import 'package:pokedex_app/models/name.dart';
 import 'package:pokedex_app/models/named_api_resource.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
@@ -31,6 +32,10 @@ import 'package:pokedex_app/models/pokemon/sprite/pokemon_sprites.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_stat.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_type_past.dart';
+import 'package:pokedex_app/models/pokemon/type.dart';
+import 'package:pokedex_app/models/pokemon/type_pokemon.dart';
+import 'package:pokedex_app/models/pokemon/type_relations.dart';
+import 'package:pokedex_app/models/pokemon/type_relations_past.dart';
 import 'package:pokedex_app/models/verbose_effect.dart';
 import 'package:pokedex_app/models/version_game_index.dart';
 
@@ -42,6 +47,7 @@ part 'serializers.g.dart';
   Description,
   Effect,
   FlavorText,
+  GenerationGameIndex,
   NamedAPIResource,
   NamedAPIResourceList,
   Name,
@@ -72,6 +78,11 @@ part 'serializers.g.dart';
   AbilityChangeEffect,
   AbilityFlavorText,
   AbilityPokemon,
+  // TYPE
+  TypeP,
+  TypeRelations,
+  TypeRelationsPast,
+  TypePokemon,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

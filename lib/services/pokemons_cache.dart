@@ -22,10 +22,10 @@ class PokemonsCache extends TimeBasedCache {
 
   String _getAbilityCacheKey(String name) => 'Ability-$name';
 
-  Future<CachedData<String>?> getPokemonList({
-    required int page,
-    required int limit,
-  }) =>
+  String _getTypeCacheKey(String name) => 'Type-$name';
+
+  Future<CachedData<String>?> getPokemonList(
+          {required int page, required int limit}) =>
       get(_getPokemonListCacheKey(page, limit));
 
   Future<void> setPokemonList({
@@ -38,27 +38,24 @@ class PokemonsCache extends TimeBasedCache {
   Future<CachedData<String>?> getPokemonByName({required String name}) async =>
       get(_getPokemonCacheKey(name));
 
-  Future<void> setPokemonByName({
-    required String name,
-    required String data,
-  }) =>
+  Future<void> setPokemonByName({required String name, required String data}) =>
       put(_getPokemonCacheKey(name), data);
 
   Future<CachedData<String>?> getSpeciesByName(String name) async =>
       get(_getSpeciesCacheKey(name));
 
-  Future<void> setSpeciesByName({
-    required String name,
-    required String data,
-  }) =>
+  Future<void> setSpeciesByName({required String name, required String data}) =>
       put(_getSpeciesCacheKey(name), data);
 
   Future<CachedData<String>?> getAbility(String name) async =>
       get(_getAbilityCacheKey(name));
 
-  Future<void> setAbility({
-    required String name,
-    required String data,
-  }) =>
+  Future<void> setAbility({required String name, required String data}) =>
       put(_getAbilityCacheKey(name), data);
+
+  Future<CachedData<String>?> getType(String name) async =>
+      get(_getTypeCacheKey(name));
+
+  Future<void> setType({required String name, required String data}) =>
+      put(_getTypeCacheKey(name), data);
 }

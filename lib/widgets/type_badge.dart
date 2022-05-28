@@ -26,12 +26,23 @@ class TypeBadge extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        type.name.capitalize(),
-        style: const TextStyle(
-          fontSize: 12.0,
-          color: Colors.white,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            type.icon,
+            color: Colors.white,
+            size: 12.0,
+          ),
+          const SizedBox(width: 4.0),
+          Text(
+            type.name.capitalize(),
+            style: const TextStyle(
+              fontSize: 12.0,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }
