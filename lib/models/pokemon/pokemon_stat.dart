@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:pokedex_app/extensions/string.dart';
 
 import 'package:pokedex_app/models/named_api_resource.dart';
 
@@ -17,6 +18,10 @@ abstract class PokemonStat implements Built<PokemonStat, PokemonStatBuilder> {
   /// The base value of the stat.
   @BuiltValueField(wireName: 'base_stat')
   int get baseStat;
+
+  String get name => stat.name == 'hp'
+      ? stat.name.toUpperCase()
+      : stat.name.hyphenToPascalWord();
 
   PokemonStat._();
 

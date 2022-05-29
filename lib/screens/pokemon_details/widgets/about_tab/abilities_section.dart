@@ -53,7 +53,7 @@ class _AbilityTile extends StatelessWidget {
       // sends every time when expanded, if true, it sends all requests
       // immediately, but only once
       // maintainState: true,
-      title: Text(pokeAbility.ability.name.capitalize()),
+      title: Text(pokeAbility.ability.name.hyphenToPascalWord()),
       collapsedIconColor: color,
       iconColor: Colors.grey,
       textColor: Colors.black,
@@ -84,7 +84,7 @@ class _AbilityTile extends StatelessWidget {
                     Text(ability.effectDefault.effect),
                     const SizedBox(height: 8.0),
                     Text(
-                      '"${ability.flavorTextDefault.text}"',
+                      '"${ability.flavorTextDefault.text.replaceAll(RegExp('\n'), ' ')}"',
                       style: const TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ],

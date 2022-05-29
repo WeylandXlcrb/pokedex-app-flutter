@@ -1,16 +1,14 @@
-# pokedex_app
+# Pokedex App
 
-A new Flutter project.
+Pokedex App mainly using:
+- `pokeapi.co` as API / remote DB
+- `hive` as time based cache service
+- `built_value` as json to model serializer
+- `go_router` as navigator
+- other fundamental packages, howdy to them 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ - Get dependencies
+ - Generate model files `flutter packages pub run build_runner build`
+ - Run app

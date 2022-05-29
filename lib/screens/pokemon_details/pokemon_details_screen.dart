@@ -105,8 +105,8 @@ class _ScreenBodyState extends State<_ScreenBody>
         controller: _tabController,
         children: [
           PokemonAboutTab(pokemon: _pokemon),
-          const PokemonStatsTab(),
-          const PokemonStatsTab(),
+          PokemonStatsTab(pokemon: _pokemon),
+          PokemonStatsTab(pokemon: _pokemon),
           const PokemonEvolutionTab(),
         ],
       ),
