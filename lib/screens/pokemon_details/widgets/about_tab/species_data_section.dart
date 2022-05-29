@@ -38,6 +38,7 @@ class SpeciesDataSection extends StatelessWidget {
               labelText: 'Base Happiness',
               child: DataTextValue(text: '${species.baseHappiness}'),
             ),
+            // TODO: Think some design on these 3 fields
             if (species.isBaby) const DataTextValue(text: 'Baby Pokemon'),
             if (species.isLegendary) const DataTextValue(text: 'Legendary'),
             if (species.isMythical) const DataTextValue(text: 'Mythical'),

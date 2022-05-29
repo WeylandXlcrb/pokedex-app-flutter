@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_moves_tab.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
@@ -106,7 +107,7 @@ class _ScreenBodyState extends State<_ScreenBody>
         children: [
           PokemonAboutTab(pokemon: _pokemon),
           PokemonStatsTab(pokemon: _pokemon),
-          PokemonStatsTab(pokemon: _pokemon),
+          PokemonMovesTab(pokemon: _pokemon),
           const PokemonEvolutionTab(),
         ],
       ),
