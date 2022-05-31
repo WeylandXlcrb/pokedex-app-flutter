@@ -108,7 +108,7 @@ class _ScreenBodyState extends State<_ScreenBody>
           PokemonAboutTab(pokemon: _pokemon),
           PokemonStatsTab(pokemon: _pokemon),
           PokemonMovesTab(pokemon: _pokemon),
-          const PokemonEvolutionTab(),
+          PokemonEvolutionTab(pokemon: _pokemon),
         ],
       ),
     );

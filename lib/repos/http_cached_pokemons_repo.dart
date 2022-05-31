@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/models/pokemon/ability.dart';
+import 'package:pokedex_app/models/pokemon/evolution_chain.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
 import 'package:pokedex_app/models/pokemon/type.dart';
 import 'package:pokedex_app/models/serializers.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
 import 'package:pokedex_app/requests/pokemons/ability_request.dart';
+import 'package:pokedex_app/requests/pokemons/evolution_chain_request.dart';
 import 'package:pokedex_app/requests/pokemons/pokemon_list_request.dart';
 import 'package:pokedex_app/requests/pokemons/pokemon_request.dart';
 import 'package:pokedex_app/requests/pokemons/pokemon_species_request.dart';
@@ -100,5 +102,24 @@ class HttpCachedPokemonsRepo implements PokemonsRepo {
     }
 
     return serializers.deserializeWith(TypeP.serializer, json.decode(body))!;
+  }
+
+  @override
+  Future<EvolutionChain> getEvolutionChain(String pokemonName) async {
+    final species = await getSpeciesByName(pokemonName);
+    final cachedData = await _cache.getEvolutionChain(species.evolutionChainId);
+    final String body;
+
+    if (cachedData?.isExpired != false) {
+      body = await EvolutionChainRequest(id: species.evolutionChainId).send();
+      _cache.setEvolutionChain(id: species.evolutionChainId, data: body);
+    } else {
+      body = cachedData!.data;
+    }
+
+    return serializers.deserializeWith(
+      EvolutionChain.serializer,
+      json.decode(body),
+    )!;
   }
 }

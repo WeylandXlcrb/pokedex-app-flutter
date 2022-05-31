@@ -24,6 +24,8 @@ class PokemonsCache extends TimeBasedCache {
 
   String _getTypeCacheKey(String name) => 'Type-$name';
 
+  String _getEvolutionChainCacheKey(int id) => 'EvoChain-$id';
+
   Future<CachedData<String>?> getPokemonList(
           {required int page, required int limit}) =>
       get(_getPokemonListCacheKey(page, limit));
@@ -58,4 +60,10 @@ class PokemonsCache extends TimeBasedCache {
 
   Future<void> setType({required String name, required String data}) =>
       put(_getTypeCacheKey(name), data);
+
+  Future<CachedData<String>?> getEvolutionChain(int id) async =>
+      get(_getEvolutionChainCacheKey(id));
+
+  Future<void> setEvolutionChain({required int id, required String data}) =>
+      put(_getEvolutionChainCacheKey(id), data);
 }

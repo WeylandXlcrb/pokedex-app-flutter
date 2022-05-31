@@ -98,7 +98,7 @@ abstract class PokemonSpecies
   APIResource get evolutionChain;
 
   /// The habitat this Pokémon species can be encountered in.
-  NamedAPIResource get habitat;
+  NamedAPIResource? get habitat;
 
   /// The generation this Pokémon species was introduced in.
   NamedAPIResource get generation;
@@ -148,6 +148,13 @@ abstract class PokemonSpecies
         (g) => g.language.name == kLanguageCodeDefault,
         orElse: () => genera.first,
       );
+
+  /// Get evolution chain id
+  int get evolutionChainId {
+    // MIGHT BE VERY ERROR PRONE
+    final segments = Uri.parse(evolutionChain.url).pathSegments;
+    return int.parse(segments[segments.length - 2]);
+  }
 
   PokemonSpecies._();
 

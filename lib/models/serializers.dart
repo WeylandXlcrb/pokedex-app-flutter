@@ -14,6 +14,9 @@ import 'package:pokedex_app/models/pokemon/ability.dart';
 import 'package:pokedex_app/models/pokemon/ability_change_effect.dart';
 import 'package:pokedex_app/models/pokemon/ability_flavor_text.dart';
 import 'package:pokedex_app/models/pokemon/ability_pokemon.dart';
+import 'package:pokedex_app/models/pokemon/chain_link.dart';
+import 'package:pokedex_app/models/pokemon/evolution_chain.dart';
+import 'package:pokedex_app/models/pokemon/evolution_detail.dart';
 import 'package:pokedex_app/models/pokemon/genus.dart';
 import 'package:pokedex_app/models/pokemon/pal_park_encounter_area.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
@@ -83,6 +86,10 @@ part 'serializers.g.dart';
   TypeRelations,
   TypeRelationsPast,
   TypePokemon,
+  // EVOLUTION
+  EvolutionChain,
+  ChainLink,
+  EvolutionDetail,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

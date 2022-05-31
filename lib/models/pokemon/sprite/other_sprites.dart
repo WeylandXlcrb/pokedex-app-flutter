@@ -10,9 +10,6 @@ abstract class OtherSprites
     implements Built<OtherSprites, OtherSpritesBuilder> {
   static Serializer<OtherSprites> get serializer => _$otherSpritesSerializer;
 
-  @BuiltValueField(wireName: 'dream_world')
-  FrontSprites get dreamWorld;
-
   FrontAndShinySprites get home;
 
   @BuiltValueField(wireName: 'official-artwork')

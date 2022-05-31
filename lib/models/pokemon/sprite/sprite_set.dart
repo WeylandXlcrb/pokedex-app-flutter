@@ -23,7 +23,7 @@ abstract class FrontShinySpriteSet {
 abstract class BackSpriteSet {
   /// The default depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_default')
-  String get backDefault;
+  String? get backDefault;
 
   /// The female depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_female')
@@ -33,7 +33,7 @@ abstract class BackSpriteSet {
 abstract class BackShinySpriteSet {
   /// The shiny depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_shiny')
-  String get backShiny;
+  String? get backShiny;
 
   /// The shiny female depiction of this Pokémon from the back in battle.
   @BuiltValueField(wireName: 'back_shiny_female')
