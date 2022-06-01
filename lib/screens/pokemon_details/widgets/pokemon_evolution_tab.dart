@@ -87,7 +87,6 @@ class _EvolutionChain extends StatelessWidget {
                   currentPokemon: currentPokemon,
                 ),
                 if (link.evolutionDetails.isNotEmpty)
-                  // TODO: paste evolution details
                   _EvoLinkDetails(detail: link.evolutionDetails.first),
                 _PokemonLink(
                   pokemonName: link.species.name,

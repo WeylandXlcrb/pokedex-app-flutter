@@ -25,7 +25,7 @@ abstract class TypeColors {
 abstract class CategoryColors {
   static const pokemons = Color.fromRGBO(225, 73, 67, 1);
   static const moves = Color.fromRGBO(230, 162, 70, 1);
-  static const evolutions = Color.fromRGBO(90, 176, 137, 1);
+  static const generations = Color.fromRGBO(90, 176, 137, 1);
   static const locations = Color.fromRGBO(107, 173, 219, 1);
   static const items = Color.fromRGBO(148, 72, 227, 1.0);
 }

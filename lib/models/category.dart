@@ -1,7 +1,7 @@
 import 'package:flutter/painting.dart';
 
 import 'package:pokedex_app/colors.dart';
-import 'package:pokedex_app/screens/evolutions/evolutions_screen.dart';
+import 'package:pokedex_app/screens/generations/generations_screen.dart';
 import 'package:pokedex_app/screens/items/items_screen.dart';
 import 'package:pokedex_app/screens/locations/locations_screen.dart';
 import 'package:pokedex_app/screens/moves/moves_screen.dart';
@@ -30,9 +30,9 @@ class Category {
       color: CategoryColors.moves,
     ),
     Category(
-      name: 'Evolutions',
-      routeName: EvolutionsScreen.routeName,
-      color: CategoryColors.evolutions,
+      name: 'Generations',
+      routeName: GenerationsScreen.routeName,
+      color: CategoryColors.generations,
     ),
     Category(
       name: 'Locations',

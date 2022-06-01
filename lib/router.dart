@@ -1,9 +1,10 @@
 import 'package:go_router/go_router.dart';
 
-import 'package:pokedex_app/screens/evolutions/evolutions_screen.dart';
+import 'package:pokedex_app/screens/generations/generations_screen.dart';
 import 'package:pokedex_app/screens/home/home_screen.dart';
 import 'package:pokedex_app/screens/items/items_screen.dart';
 import 'package:pokedex_app/screens/locations/locations_screen.dart';
+import 'package:pokedex_app/screens/move_details/move_details_screen.dart';
 import 'package:pokedex_app/screens/moves/moves_screen.dart';
 import 'package:pokedex_app/screens/pokemon_details/pokemon_details_screen.dart';
 import 'package:pokedex_app/screens/pokemons/pokemons_screen.dart';
@@ -34,11 +35,20 @@ final appRouter = GoRouter(
           path: 'moves',
           name: MovesScreen.routeName,
           builder: (context, state) => const MovesScreen(),
+          routes: [
+            GoRoute(
+              path: ':name',
+              name: MoveDetailsScreen.routeName,
+              builder: (context, state) => MoveDetailsScreen(
+                moveName: state.params['name']!,
+              ),
+            ),
+          ],
         ),
         GoRoute(
-          path: 'evolutions',
-          name: EvolutionsScreen.routeName,
-          builder: (context, state) => const EvolutionsScreen(),
+          path: 'generations',
+          name: GenerationsScreen.routeName,
+          builder: (context, state) => const GenerationsScreen(),
         ),
         GoRoute(
           path: 'locations',

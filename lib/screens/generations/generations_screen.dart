@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class EvolutionsScreen extends StatelessWidget {
-  static const routeName = 'evolutions';
+class GenerationsScreen extends StatelessWidget {
+  static const routeName = 'generations';
 
-  const EvolutionsScreen({Key? key}) : super(key: key);
+  const GenerationsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
