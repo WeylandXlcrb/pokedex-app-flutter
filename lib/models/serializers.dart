@@ -7,12 +7,19 @@ import 'package:pokedex_app/models/description.dart';
 import 'package:pokedex_app/models/effect.dart';
 import 'package:pokedex_app/models/flavor_text.dart';
 import 'package:pokedex_app/models/generation_game_index.dart';
+import 'package:pokedex_app/models/machine_version_detail.dart';
+import 'package:pokedex_app/models/move/contest_combo_detail.dart';
+import 'package:pokedex_app/models/move/contest_combo_sets.dart';
+import 'package:pokedex_app/models/move/move.dart';
+import 'package:pokedex_app/models/move/move_meta_data.dart';
+import 'package:pokedex_app/models/move/move_stat_change.dart';
+import 'package:pokedex_app/models/move/past_move_stat_values.dart';
 import 'package:pokedex_app/models/name.dart';
 import 'package:pokedex_app/models/named_api_resource.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/models/pokemon/ability.dart';
-import 'package:pokedex_app/models/pokemon/ability_change_effect.dart';
-import 'package:pokedex_app/models/pokemon/ability_flavor_text.dart';
+import 'package:pokedex_app/models/pokemon/ability_effect_change.dart';
+import 'package:pokedex_app/models/version_group_flavor_text.dart';
 import 'package:pokedex_app/models/pokemon/ability_pokemon.dart';
 import 'package:pokedex_app/models/pokemon/chain_link.dart';
 import 'package:pokedex_app/models/pokemon/evolution_chain.dart';
@@ -51,11 +58,13 @@ part 'serializers.g.dart';
   Effect,
   FlavorText,
   GenerationGameIndex,
+  MachineVersionDetail,
   NamedAPIResource,
   NamedAPIResourceList,
   Name,
   VerboseEffect,
   VersionGameIndex,
+  VersionGroupFlavorText,
   // POKEMON
   Pokemon,
   PokemonAbility,
@@ -78,8 +87,7 @@ part 'serializers.g.dart';
   PokemonSpecies,
   // ABILITY
   Ability,
-  AbilityChangeEffect,
-  AbilityFlavorText,
+  AbilityEffectChange,
   AbilityPokemon,
   // TYPE
   TypeP,
@@ -90,6 +98,13 @@ part 'serializers.g.dart';
   EvolutionChain,
   ChainLink,
   EvolutionDetail,
+  // MOVE
+  Move,
+  ContestComboSets,
+  ContestComboDetail,
+  MoveMetaData,
+  PastMoveStatValues,
+  MoveStatChange,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

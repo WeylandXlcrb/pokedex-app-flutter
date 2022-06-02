@@ -16,6 +16,8 @@ class MovesCache extends TimeBasedCache {
   String _getMovesListCacheKey(int page, int limit) =>
       'Moves-page-${page}_limit_$limit';
 
+  String _getMoveCacheKey(String name) => 'Move-$name';
+
   Future<CachedData<String>?> getMoveList({
     required int page,
     required int limit,
@@ -28,4 +30,10 @@ class MovesCache extends TimeBasedCache {
     required String data,
   }) =>
       put(_getMovesListCacheKey(page, limit), data);
+
+  Future<CachedData<String>?> getMove(String name) =>
+      get(_getMoveCacheKey(name));
+
+  Future<void> setMove({required String name, required String data}) =>
+      put(_getMoveCacheKey(name), data);
 }

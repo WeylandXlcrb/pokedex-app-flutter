@@ -5,12 +5,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:pokedex_app/models/effect.dart';
 import 'package:pokedex_app/models/named_api_resource.dart';
 
-part 'ability_change_effect.g.dart';
+part 'ability_effect_change.g.dart';
 
-abstract class AbilityChangeEffect
-    implements Built<AbilityChangeEffect, AbilityChangeEffectBuilder> {
-  static Serializer<AbilityChangeEffect> get serializer =>
-      _$abilityChangeEffectSerializer;
+abstract class AbilityEffectChange
+    implements Built<AbilityEffectChange, AbilityEffectChangeBuilder> {
+  static Serializer<AbilityEffectChange> get serializer =>
+      _$abilityEffectChangeSerializer;
 
   /// The previous effect of this ability listed in different languages.
   @BuiltValueField(wireName: 'effect_entries')
@@ -20,9 +20,9 @@ abstract class AbilityChangeEffect
   @BuiltValueField(wireName: 'version_group')
   NamedAPIResource get versionGroup;
 
-  AbilityChangeEffect._();
+  AbilityEffectChange._();
 
-  factory AbilityChangeEffect(
-          [void Function(AbilityChangeEffectBuilder) updates]) =
-      _$AbilityChangeEffect;
+  factory AbilityEffectChange(
+          [void Function(AbilityEffectChangeBuilder) updates]) =
+      _$AbilityEffectChange;
 }

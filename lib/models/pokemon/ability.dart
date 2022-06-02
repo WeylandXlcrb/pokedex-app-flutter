@@ -5,8 +5,8 @@ import 'package:pokedex_app/constants.dart';
 
 import 'package:pokedex_app/models/name.dart';
 import 'package:pokedex_app/models/named_api_resource.dart';
-import 'package:pokedex_app/models/pokemon/ability_change_effect.dart';
-import 'package:pokedex_app/models/pokemon/ability_flavor_text.dart';
+import 'package:pokedex_app/models/pokemon/ability_effect_change.dart';
+import 'package:pokedex_app/models/version_group_flavor_text.dart';
 import 'package:pokedex_app/models/pokemon/ability_pokemon.dart';
 import 'package:pokedex_app/models/verbose_effect.dart';
 
@@ -37,18 +37,18 @@ abstract class Ability implements Built<Ability, AbilityBuilder> {
 
   /// The list of previous effects this ability has had across version groups.
   @BuiltValueField(wireName: 'effect_changes')
-  BuiltList<AbilityChangeEffect> get effectChanges;
+  BuiltList<AbilityEffectChange> get effectChanges;
 
   /// The flavor text of this ability listed in different languages.
   @BuiltValueField(wireName: 'flavor_text_entries')
-  BuiltList<AbilityFlavorText> get flavorTextEntries;
+  BuiltList<VersionGroupFlavorText> get flavorTextEntries;
 
   /// A list of Pokémon that could potentially have this ability.
   @BuiltValueField(wireName: 'pokemon')
   BuiltList<AbilityPokemon> get pokemons;
 
   /// Default flavor text for language (english) or first if language absent;
-  AbilityFlavorText get flavorTextDefault => flavorTextEntries.firstWhere(
+  VersionGroupFlavorText get flavorTextDefault => flavorTextEntries.firstWhere(
         (f) => f.language.name == kLanguageCodeDefault,
         orElse: () => flavorTextEntries.first,
       );

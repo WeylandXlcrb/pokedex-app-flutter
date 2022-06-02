@@ -8,6 +8,11 @@ abstract class NamedAPIResource
   static Serializer<NamedAPIResource> get serializer =>
       _$namedAPIResourceSerializer;
 
+  @BuiltValueHook(initializeBuilder: true)
+  static void _setDefaults(NamedAPIResourceBuilder b) => b
+    ..name = 'unknown'
+    ..url = '';
+
   String get name;
 
   String get url;
