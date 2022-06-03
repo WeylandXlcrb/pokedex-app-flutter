@@ -142,7 +142,7 @@ class _StrokeDecorationText extends StatelessWidget {
         fit: BoxFit.none,
         alignment: Alignment.center,
         child: StrokeFadeOutText(
-          text: pokemon.name.toUpperCase(),
+          text: pokemon.name.hyphenToPascalWord().toUpperCase(),
           fontSize: MediaQuery.of(context).size.width * 0.25,
         ),
       ),

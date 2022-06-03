@@ -10,11 +10,11 @@ abstract class PokemonsRepo {
 
   Future<Pokemon> getPokemonByName(String name);
 
-  Future<PokemonSpecies> getSpeciesByName(String name);
+  Future<PokemonSpecies> getSpecies(int id);
 
   Future<Ability> getAbility(String name);
 
   Future<TypeP> getType(String name);
 
-  Future<EvolutionChain> getEvolutionChain(String pokemonName);
+  Future<EvolutionChain> getEvolutionChain(int speciesId);
 }

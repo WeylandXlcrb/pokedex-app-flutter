@@ -161,7 +161,7 @@ class _PokemonCardState extends State<PokemonCard> {
                           child: AnimatedCrossFade(
                             firstChild: const Text('-------'),
                             secondChild:
-                                Text(_pokemon?.name.capitalize() ?? ''),
+                                Text(_pokemon?.name.hyphenToPascalWord() ?? ''),
                             duration: _transitionDuration,
                             crossFadeState: _pokemon != null
                                 ? CrossFadeState.showSecond

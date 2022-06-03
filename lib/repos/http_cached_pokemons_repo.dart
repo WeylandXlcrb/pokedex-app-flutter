@@ -57,13 +57,13 @@ class HttpCachedPokemonsRepo implements PokemonsRepo {
   }
 
   @override
-  Future<PokemonSpecies> getSpeciesByName(String name) async {
-    final cachedData = await _cache.getSpeciesByName(name);
+  Future<PokemonSpecies> getSpecies(int id) async {
+    final cachedData = await _cache.getSpecies(id);
     final String body;
 
     if (cachedData?.isExpired != false) {
-      body = await PokemonSpeciesRequest(pokemonName: name).send();
-      _cache.setSpeciesByName(name: name, data: body);
+      body = await PokemonSpeciesRequest(id: id).send();
+      _cache.setSpecies(id: id, data: body);
     } else {
       body = cachedData!.data;
     }
@@ -105,8 +105,8 @@ class HttpCachedPokemonsRepo implements PokemonsRepo {
   }
 
   @override
-  Future<EvolutionChain> getEvolutionChain(String pokemonName) async {
-    final species = await getSpeciesByName(pokemonName);
+  Future<EvolutionChain> getEvolutionChain(int speciesId) async {
+    final species = await getSpecies(speciesId);
     final cachedData = await _cache.getEvolutionChain(species.evolutionChainId);
     final String body;
 

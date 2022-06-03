@@ -99,6 +99,11 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder> {
   BuiltList<PokemonType> typesCapped([int length = kDefaultTypeLengthCap]) =>
       types.sublist(0, min(length, types.length));
 
+  int get speciesId {
+    final segments = Uri.parse(species.url).pathSegments;
+    return int.parse(segments[segments.length - 2]);
+  }
+
   Pokemon._();
 
   factory Pokemon([void Function(PokemonBuilder) updates]) = _$Pokemon;

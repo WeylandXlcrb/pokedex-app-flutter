@@ -27,7 +27,7 @@ abstract class Move implements Built<Move, MoveBuilder> {
   String get name;
 
   /// The percent value of how likely this move is to be successful.
-  int get accuracy;
+  int? get accuracy;
 
   /// The percent value of how likely it is this moves effect will happen.
   @BuiltValueField(wireName: 'effect_chance')

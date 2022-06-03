@@ -84,7 +84,7 @@ class _AbilityTile extends StatelessWidget {
                     Text(ability.effectDefault.effect),
                     const SizedBox(height: 8.0),
                     Text(
-                      '"${ability.flavorTextDefault.text.replaceAll(RegExp('\n'), ' ')}"',
+                      '"${ability.flavorTextDefault.text.replaceNewLineTo()}"',
                       style: const TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ],

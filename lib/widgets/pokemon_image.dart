@@ -31,21 +31,28 @@ class PokemonImage extends StatelessWidget {
     final placeholderImage = _PlaceholderImage(imageSize: imageSize);
     final errorImage = _ErrorImage(imageSize: imageSize);
 
+    final url = pokemon?.sprites.other.officialArtwork.frontDefault ??
+        pokemon?.sprites.frontDefault ?? '';
+
+    if (url.isEmpty) {
+      return placeholderImage;
+    }
+
     return AnimatedCrossFade(
       firstChild: pokemon == null
           ? placeholderImage
           : CachedNetworkImage(
-              imageUrl: pokemon!.sprites.other.officialArtwork.frontDefault,
-              height: imageSize,
-              placeholder: (_, __) => placeholderImage,
-              errorWidget: (_, __, ___) => errorImage,
-              fit: BoxFit.contain,
-              fadeInDuration: duration,
-            ),
+        imageUrl: url,
+        height: imageSize,
+        placeholder: (_, __) => placeholderImage,
+        errorWidget: (_, __, ___) => errorImage,
+        fit: BoxFit.contain,
+        fadeInDuration: duration,
+      ),
       secondChild: errorImage,
       duration: duration,
       crossFadeState:
-          hasError ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      hasError ? CrossFadeState.showSecond : CrossFadeState.showFirst,
     );
   }
 }

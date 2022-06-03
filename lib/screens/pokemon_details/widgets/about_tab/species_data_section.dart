@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
@@ -17,7 +18,7 @@ class SpeciesDataSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<PokemonSpecies>(
-      future: context.read<PokemonsRepo>().getSpeciesByName(pokemon.name),
+      future: context.read<PokemonsRepo>().getSpecies(pokemon.speciesId),
       builder: (_, snapshot) {
         final List<Widget> children;
 
@@ -28,7 +29,7 @@ class SpeciesDataSection extends StatelessWidget {
 
           children = [
             Text(
-              species.flavorTextDefault.text.replaceAll(RegExp(r'\n'), ' '),
+              species.flavorTextDefault.text.replaceNewLineTo(),
             ),
             PokeDataRow(
               labelText: 'Genus',

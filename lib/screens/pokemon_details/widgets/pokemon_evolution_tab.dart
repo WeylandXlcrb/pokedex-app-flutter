@@ -31,8 +31,9 @@ class PokemonEvolutionTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: kPaddingDefault * 2),
           sliver: SliverToBoxAdapter(
             child: FutureBuilder<EvolutionChain>(
-              future:
-                  context.read<PokemonsRepo>().getEvolutionChain(pokemon.name),
+              future: context
+                  .read<PokemonsRepo>()
+                  .getEvolutionChain(pokemon.speciesId),
               builder: (_, snapshot) {
                 if (snapshot.hasError) {
                   return Center(

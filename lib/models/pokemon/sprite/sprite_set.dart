@@ -3,7 +3,7 @@ import 'package:built_value/built_value.dart';
 abstract class FrontSpriteSet {
   /// The default depiction of this Pokémon from the front in battle.
   @BuiltValueField(wireName: 'front_default')
-  String get frontDefault;
+  String? get frontDefault;
 
   /// The female depiction of this Pokémon from the front in battle.
   @BuiltValueField(wireName: 'front_female')
@@ -13,7 +13,7 @@ abstract class FrontSpriteSet {
 abstract class FrontShinySpriteSet {
   /// The shiny depiction of this Pokémon from the front in battle.
   @BuiltValueField(wireName: 'front_shiny')
-  String get frontShiny;
+  String? get frontShiny;
 
   /// The shiny female depiction of this Pokémon from the front in battle.
   @BuiltValueField(wireName: 'front_shiny_female')
