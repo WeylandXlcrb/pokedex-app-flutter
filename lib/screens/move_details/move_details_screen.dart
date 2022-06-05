@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokedex_app/screens/pokemon_details/pokemon_details_screen.dart';
-import 'package:pokedex_app/screens/pokemons/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pokedex_app/colors.dart';
@@ -10,6 +8,8 @@ import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/move/move.dart';
 import 'package:pokedex_app/models/pokemon/type_parser.dart';
 import 'package:pokedex_app/repos/moves_repo.dart';
+import 'package:pokedex_app/screens/pokemon_details/pokemon_details_screen.dart';
+import 'package:pokedex_app/screens/pokemons/widgets/pokemon_card.dart';
 import 'package:pokedex_app/widgets/pokeball_loading_indicator.dart';
 
 class MoveDetailsScreen extends StatelessWidget {

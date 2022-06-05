@@ -5,10 +5,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:pokedex_app/router.dart';
 import 'package:pokedex_app/theme.dart';
+import 'package:pokedex_app/repos/http_cached_locations_repo.dart';
 import 'package:pokedex_app/repos/http_cached_moves_repo.dart';
 import 'package:pokedex_app/repos/http_cached_pokemons_repo.dart';
+import 'package:pokedex_app/repos/locations_repo.dart';
 import 'package:pokedex_app/repos/moves_repo.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
+import 'package:pokedex_app/services/locations_cache.dart';
 import 'package:pokedex_app/services/moves_cache.dart';
 import 'package:pokedex_app/services/pokemons_cache.dart';
 
@@ -19,6 +22,7 @@ void main() async {
 
   await PokemonsCache().init();
   await MovesCache().init();
+  await LocationsCache().init();
 
   runApp(const MyApp());
 }
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<PokemonsRepo>(create: (_) => HttpCachedPokemonsRepo()),
         Provider<MovesRepo>(create: (_) => HttpCachedMoveRepo()),
+        Provider<LocationsRepo>(create: (_) => HttpCachedLocationsRepo()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Pokedex',
