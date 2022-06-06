@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/models/pokemon/ability.dart';
@@ -7,7 +5,7 @@ import 'package:pokedex_app/models/pokemon/evolution_chain.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/models/pokemon/pokemon_species.dart';
 import 'package:pokedex_app/models/pokemon/type.dart';
-import 'package:pokedex_app/models/serializers.dart';
+import 'package:pokedex_app/repos/http_cached_repo.dart';
 import 'package:pokedex_app/repos/pokemons_repo.dart';
 import 'package:pokedex_app/requests/pokemons/ability_request.dart';
 import 'package:pokedex_app/requests/pokemons/evolution_chain_request.dart';
@@ -17,109 +15,65 @@ import 'package:pokedex_app/requests/pokemons/pokemon_species_request.dart';
 import 'package:pokedex_app/requests/pokemons/type_request.dart';
 import 'package:pokedex_app/services/pokemons_cache.dart';
 
-class HttpCachedPokemonsRepo implements PokemonsRepo {
+class HttpCachedPokemonsRepo extends HttpCachedRepo implements PokemonsRepo {
   final _cache = PokemonsCache();
 
   @override
   Future<NamedAPIResourceList> getPokemonList({
     int page = 1,
     int limit = kPerPageDefaultLimit,
-  }) async {
-    final cachedData = await _cache.getPokemonList(page: page, limit: limit);
-    final String body;
-
-    if (cachedData?.isExpired != false) {
-      body = await PokemonListRequest(page: page, limit: limit).send();
-      _cache.setPokemonList(page: page, limit: limit, data: body);
-    } else {
-      body = cachedData!.data;
-    }
-
-    return serializers.deserializeWith(
-      NamedAPIResourceList.serializer,
-      json.decode(body),
-    )!;
-  }
+  }) async =>
+      getCachedData(
+        serializer: NamedAPIResourceList.serializer,
+        createRequest: () => PokemonListRequest(page: page, limit: limit),
+        getCachedData: () => _cache.getPokemonList(page: page, limit: limit),
+        setCachedData: (data) =>
+            _cache.setPokemonList(page: page, limit: limit, data: data),
+      );
 
   @override
-  Future<Pokemon> getPokemonByName(String name) async {
-    final cachedData = await _cache.getPokemonByName(name: name);
-    final String body;
-
-    if (cachedData?.isExpired != false) {
-      body = await PokemonRequest(pokemonName: name).send();
-      _cache.setPokemonByName(name: name, data: body);
-    } else {
-      body = cachedData!.data;
-    }
-
-    return serializers.deserializeWith(Pokemon.serializer, json.decode(body))!;
-  }
+  Future<Pokemon> getPokemonByName(String name) async => getCachedData(
+        serializer: Pokemon.serializer,
+        createRequest: () => PokemonRequest(pokemonName: name),
+        getCachedData: () => _cache.getPokemonByName(name: name),
+        setCachedData: (data) =>
+            _cache.setPokemonByName(name: name, data: data),
+      );
 
   @override
-  Future<PokemonSpecies> getSpecies(int id) async {
-    final cachedData = await _cache.getSpecies(id);
-    final String body;
-
-    if (cachedData?.isExpired != false) {
-      body = await PokemonSpeciesRequest(id: id).send();
-      _cache.setSpecies(id: id, data: body);
-    } else {
-      body = cachedData!.data;
-    }
-
-    return serializers.deserializeWith(
-      PokemonSpecies.serializer,
-      json.decode(body),
-    )!;
-  }
+  Future<PokemonSpecies> getSpecies(int id) async => getCachedData(
+        serializer: PokemonSpecies.serializer,
+        createRequest: () => PokemonSpeciesRequest(id: id),
+        getCachedData: () => _cache.getSpecies(id),
+        setCachedData: (data) => _cache.setSpecies(id: id, data: data),
+      );
 
   @override
-  Future<Ability> getAbility(String name) async {
-    final cachedData = await _cache.getAbility(name);
-    final String body;
-
-    if (cachedData?.isExpired != false) {
-      body = await AbilityRequest(name: name).send();
-      _cache.setAbility(name: name, data: body);
-    } else {
-      body = cachedData!.data;
-    }
-
-    return serializers.deserializeWith(Ability.serializer, json.decode(body))!;
-  }
+  Future<Ability> getAbility(String name) async => getCachedData(
+        serializer: Ability.serializer,
+        createRequest: () => AbilityRequest(name: name),
+        getCachedData: () => _cache.getAbility(name),
+        setCachedData: (data) => _cache.setAbility(name: name, data: data),
+      );
 
   @override
-  Future<TypeP> getType(String name) async {
-    final cachedData = await _cache.getType(name);
-    final String body;
-
-    if (cachedData?.isExpired != false) {
-      body = await TypeRequest(name: name).send();
-      _cache.setType(name: name, data: body);
-    } else {
-      body = cachedData!.data;
-    }
-
-    return serializers.deserializeWith(TypeP.serializer, json.decode(body))!;
-  }
+  Future<TypeP> getType(String name) async => getCachedData(
+        serializer: TypeP.serializer,
+        createRequest: () => TypeRequest(name: name),
+        getCachedData: () => _cache.getType(name),
+        setCachedData: (data) => _cache.setType(name: name, data: data),
+      );
 
   @override
   Future<EvolutionChain> getEvolutionChain(int speciesId) async {
     final species = await getSpecies(speciesId);
-    final cachedData = await _cache.getEvolutionChain(species.evolutionChainId);
-    final String body;
 
-    if (cachedData?.isExpired != false) {
-      body = await EvolutionChainRequest(id: species.evolutionChainId).send();
-      _cache.setEvolutionChain(id: species.evolutionChainId, data: body);
-    } else {
-      body = cachedData!.data;
-    }
-
-    return serializers.deserializeWith(
-      EvolutionChain.serializer,
-      json.decode(body),
-    )!;
+    return getCachedData(
+      serializer: EvolutionChain.serializer,
+      createRequest: () => EvolutionChainRequest(id: species.evolutionChainId),
+      getCachedData: () => _cache.getEvolutionChain(species.evolutionChainId),
+      setCachedData: (data) =>
+          _cache.setEvolutionChain(id: species.evolutionChainId, data: data),
+    );
   }
 }

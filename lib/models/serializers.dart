@@ -5,8 +5,15 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:pokedex_app/models/api_resource.dart';
 import 'package:pokedex_app/models/description.dart';
 import 'package:pokedex_app/models/effect.dart';
+import 'package:pokedex_app/models/encounter.dart';
 import 'package:pokedex_app/models/flavor_text.dart';
 import 'package:pokedex_app/models/generation_game_index.dart';
+import 'package:pokedex_app/models/location/encounter_method_rate.dart';
+import 'package:pokedex_app/models/location/encounter_version_details.dart';
+import 'package:pokedex_app/models/location/location.dart';
+import 'package:pokedex_app/models/location/location_area.dart';
+import 'package:pokedex_app/models/location/pokemon_encounter.dart';
+import 'package:pokedex_app/models/location/region.dart';
 import 'package:pokedex_app/models/machine_version_detail.dart';
 import 'package:pokedex_app/models/move/contest_combo_detail.dart';
 import 'package:pokedex_app/models/move/contest_combo_sets.dart';
@@ -19,6 +26,7 @@ import 'package:pokedex_app/models/named_api_resource.dart';
 import 'package:pokedex_app/models/named_api_resource_list.dart';
 import 'package:pokedex_app/models/pokemon/ability.dart';
 import 'package:pokedex_app/models/pokemon/ability_effect_change.dart';
+import 'package:pokedex_app/models/version_encounter_detail.dart';
 import 'package:pokedex_app/models/version_group_flavor_text.dart';
 import 'package:pokedex_app/models/pokemon/ability_pokemon.dart';
 import 'package:pokedex_app/models/pokemon/chain_link.dart';
@@ -56,6 +64,7 @@ part 'serializers.g.dart';
   APIResource,
   Description,
   Effect,
+  Encounter,
   FlavorText,
   GenerationGameIndex,
   MachineVersionDetail,
@@ -63,6 +72,7 @@ part 'serializers.g.dart';
   NamedAPIResourceList,
   Name,
   VerboseEffect,
+  VersionEncounterDetail,
   VersionGameIndex,
   VersionGroupFlavorText,
   // POKEMON
@@ -105,6 +115,13 @@ part 'serializers.g.dart';
   MoveMetaData,
   PastMoveStatValues,
   MoveStatChange,
+  // Location
+  Location,
+  LocationArea,
+  EncounterMethodRate,
+  EncounterVersionDetails,
+  PokemonEncounter,
+  Region,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

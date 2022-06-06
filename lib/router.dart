@@ -3,12 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex_app/screens/generations/generations_screen.dart';
 import 'package:pokedex_app/screens/home/home_screen.dart';
 import 'package:pokedex_app/screens/items/items_screen.dart';
+import 'package:pokedex_app/screens/area_details/area_details_screen.dart';
 import 'package:pokedex_app/screens/location_details/location_details_screen.dart';
 import 'package:pokedex_app/screens/locations/locations_screen.dart';
 import 'package:pokedex_app/screens/move_details/move_details_screen.dart';
 import 'package:pokedex_app/screens/moves/moves_screen.dart';
 import 'package:pokedex_app/screens/pokemon_details/pokemon_details_screen.dart';
 import 'package:pokedex_app/screens/pokemons/pokemons_screen.dart';
+import 'package:pokedex_app/screens/region_details/region_details_screen.dart';
 
 final appRouter = GoRouter(
   urlPathStrategy: UrlPathStrategy.path,
@@ -61,6 +63,20 @@ final appRouter = GoRouter(
               name: LocationDetailsScreen.routeName,
               builder: (context, state) => LocationDetailsScreen(
                 locationName: state.params['name']!,
+              ),
+            ),
+            GoRoute(
+              path: 'region/:name',
+              name: RegionDetailsScreen.routeName,
+              builder: (context, state) => RegionDetailsScreen(
+                regionName: state.params['name']!,
+              ),
+            ),
+            GoRoute(
+              path: 'area/:name',
+              name: AreaDetailsScreen.routeName,
+              builder: (context, state) => AreaDetailsScreen(
+                areaName: state.params['name']!,
               ),
             ),
           ],

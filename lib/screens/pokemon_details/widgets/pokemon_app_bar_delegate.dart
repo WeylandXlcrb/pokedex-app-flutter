@@ -53,7 +53,6 @@ class PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         ),
         AppBar(
           backgroundColor: Colors.transparent,
-          elevation: 0,
           title: Opacity(
             opacity: shrinkOpacity,
             child: Text(pokemon.name.capitalize()),

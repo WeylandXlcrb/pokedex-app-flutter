@@ -4,11 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/requests/api_request.dart';
 
-class LocationsRequest extends ApiRequest {
+class LocationListRequest extends ApiRequest {
   final int page;
   final int limit;
 
-  LocationsRequest({
+  LocationListRequest({
     this.page = 1,
     this.limit = kPerPageDefaultLimit,
   });

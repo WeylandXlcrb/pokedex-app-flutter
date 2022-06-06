@@ -20,7 +20,6 @@ class MovesScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Moves'),
         backgroundColor: CategoryColors.moves,
-        elevation: 0,
       ),
       body: PaginatedResourceList(
         pageFetcher: context.read<MovesRepo>().getMoveList,

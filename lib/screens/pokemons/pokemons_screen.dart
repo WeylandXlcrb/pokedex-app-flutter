@@ -19,7 +19,6 @@ class PokemonsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pokemons'),
         backgroundColor: CategoryColors.pokemons,
-        elevation: 0,
       ),
       body: PaginatedResourceList(
         pageFetcher: context.read<PokemonsRepo>().getPokemonList,

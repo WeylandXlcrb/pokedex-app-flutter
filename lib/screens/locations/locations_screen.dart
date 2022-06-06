@@ -20,12 +20,11 @@ class LocationsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Locations'),
         backgroundColor: CategoryColors.locations,
-        elevation: 0,
       ),
       body: PaginatedResourceList(
         pageFetcher: context.read<LocationsRepo>().getLocationList,
         padding: const EdgeInsets.symmetric(vertical: kPaddingDefault * 1.5),
-        separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+        separatorBuilder: (_, __) => const SizedBox.shrink(),
         itemBuilder: (_, __, resource) => ListTile(
           title: Text(resource.name.hyphenToPascalWord()),
           trailing: const Icon(

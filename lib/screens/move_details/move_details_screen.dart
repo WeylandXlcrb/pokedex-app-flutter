@@ -66,7 +66,6 @@ class MoveDetailsScreen extends StatelessWidget {
               backgroundColor: snapshot.hasData
                   ? TypeParser.getColorByName(snapshot.data!.type.name)
                   : CategoryColors.moves,
-              elevation: 0,
               bottom: tabBar,
             ),
             body: body,
