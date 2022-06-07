@@ -8,6 +8,9 @@ import 'package:pokedex_app/models/effect.dart';
 import 'package:pokedex_app/models/encounter.dart';
 import 'package:pokedex_app/models/flavor_text.dart';
 import 'package:pokedex_app/models/generation_game_index.dart';
+import 'package:pokedex_app/models/item/item.dart';
+import 'package:pokedex_app/models/item/item_holder_pokemon.dart';
+import 'package:pokedex_app/models/item/item_sprites.dart';
 import 'package:pokedex_app/models/location/encounter_method_rate.dart';
 import 'package:pokedex_app/models/location/encounter_version_details.dart';
 import 'package:pokedex_app/models/location/location.dart';
@@ -122,6 +125,10 @@ part 'serializers.g.dart';
   EncounterVersionDetails,
   PokemonEncounter,
   Region,
+  // Item
+  Item,
+  ItemSprites,
+  ItemHolderPokemon,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

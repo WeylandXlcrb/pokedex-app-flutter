@@ -17,31 +17,16 @@ typedef PageFetcher = Future<NamedAPIResourceList> Function({
   int page,
 });
 
-class PaginatedResourceList extends StatefulWidget {
-  final IndexedWidgetBuilder separatorBuilder;
-  final IndexedResourceWidgetBuilder itemBuilder;
-  final PageFetcher pageFetcher;
-  final EdgeInsetsGeometry? padding;
-
-  const PaginatedResourceList({
-    Key? key,
-    required this.separatorBuilder,
-    required this.itemBuilder,
-    required this.pageFetcher,
-    this.padding,
-  }) : super(key: key);
-
-  @override
-  State<PaginatedResourceList> createState() => _PaginatedResourceListState();
-}
-
-class _PaginatedResourceListState extends State<PaginatedResourceList> {
+abstract class _PaginatedResourceState<T extends StatefulWidget>
+    extends State<T> {
   final _scrollController = ScrollController();
 
   var _paginationState = PaginationState.idle;
   var _currentPage = 1;
   var _hasError = false;
   NamedAPIResourceList? _resourceList;
+
+  PageFetcher get pageFetcher;
 
   bool get _isScrollThresholdReached =>
       _scrollController.offset >=
@@ -92,7 +77,7 @@ class _PaginatedResourceListState extends State<PaginatedResourceList> {
     });
 
     try {
-      final resList = await widget.pageFetcher(page: page);
+      final resList = await pageFetcher(page: page);
 
       setState(() {
         _resourceList = _resourceList?.rebuild((rL) => rL
@@ -109,6 +94,30 @@ class _PaginatedResourceListState extends State<PaginatedResourceList> {
       setState(() => _paginationState = PaginationState.idle);
     }
   }
+}
+
+class PaginatedResourceList extends StatefulWidget {
+  final IndexedWidgetBuilder separatorBuilder;
+  final IndexedResourceWidgetBuilder itemBuilder;
+  final PageFetcher pageFetcher;
+  final EdgeInsetsGeometry? padding;
+
+  const PaginatedResourceList({
+    Key? key,
+    required this.separatorBuilder,
+    required this.itemBuilder,
+    required this.pageFetcher,
+    this.padding,
+  }) : super(key: key);
+
+  @override
+  State<PaginatedResourceList> createState() => _PaginatedResourceListState();
+}
+
+class _PaginatedResourceListState
+    extends _PaginatedResourceState<PaginatedResourceList> {
+  @override
+  PageFetcher get pageFetcher => widget.pageFetcher;
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +152,83 @@ class _PaginatedResourceListState extends State<PaginatedResourceList> {
         itemBuilder: (context, index) {
           if (_paginationState == PaginationState.appending &&
               index == itemCount - 1) {
+            return const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(child: PokeballLoadingIndicator()),
+            );
+          }
+
+          final resource = _resourceList!.results[index];
+
+          return widget.itemBuilder(context, index, resource);
+        },
+      );
+    }
+  }
+}
+
+class PaginatedResourceGrid extends StatefulWidget {
+  final PageFetcher pageFetcher;
+  final IndexedResourceWidgetBuilder itemBuilder;
+  final SliverGridDelegate? gridDelegate;
+  final EdgeInsetsGeometry? padding;
+
+  const PaginatedResourceGrid({
+    Key? key,
+    required this.pageFetcher,
+    required this.itemBuilder,
+    this.gridDelegate,
+    this.padding,
+  }) : super(key: key);
+
+  @override
+  State<PaginatedResourceGrid> createState() => _PaginatedResourceGridState();
+}
+
+class _PaginatedResourceGridState
+    extends _PaginatedResourceState<PaginatedResourceGrid> {
+  static const _gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    mainAxisSpacing: 16.0,
+    crossAxisSpacing: 16.0,
+  );
+
+  @override
+  PageFetcher get pageFetcher => widget.pageFetcher;
+
+  @override
+  Widget build(BuildContext context) {
+    if (_hasError) {
+      return Center(
+        child: Column(
+          children: [
+            const Text('An error has occurred'),
+            TextButton(
+              onPressed: _fetchPage,
+              child: const Text('Try again'),
+            ),
+          ],
+        ),
+      );
+    } else if (_paginationState == PaginationState.loading) {
+      return const Center(
+        child: PokeballLoadingIndicator(),
+      );
+    } else {
+      var itemCount = _resourceList!.results.length;
+
+      if (_paginationState == PaginationState.appending) {
+        itemCount += 2;
+      }
+
+      return GridView.builder(
+        controller: _scrollController,
+        itemCount: itemCount,
+        padding: widget.padding ?? const EdgeInsets.all(kPaddingDefault * 1.5),
+        gridDelegate: widget.gridDelegate ?? _gridDelegate,
+        itemBuilder: (context, index) {
+          if (_paginationState == PaginationState.appending &&
+              index >= itemCount - 2) {
             return const Padding(
               padding: EdgeInsets.all(16.0),
               child: Center(child: PokeballLoadingIndicator()),

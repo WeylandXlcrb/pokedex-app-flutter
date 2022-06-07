@@ -12,7 +12,14 @@ abstract class VersionGroupFlavorText
 
   /// The localized name for an API resource in a specific language.
   @BuiltValueField(wireName: 'flavor_text')
-  String get text;
+  String? get flavorText;
+
+  /// The localized name for an API resource in a specific language.
+  @BuiltValueField(wireName: 'text')
+  String? get fText;
+
+  // Somewhere just used one of the 2 names for field... made for not to duplicate model
+  String get text => flavorText ?? fText ?? '';
 
   /// The language this text resource is in.
   NamedAPIResource get language;
