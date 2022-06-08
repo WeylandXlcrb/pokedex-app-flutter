@@ -7,7 +7,7 @@ import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
 import 'package:pokedex_app/widgets/pokemon_image.dart';
-import 'package:pokedex_app/widgets/stroke_fade_out_text.dart';
+import 'package:pokedex_app/widgets/stroke_decoration_text.dart';
 import 'package:pokedex_app/widgets/type_badge.dart';
 
 class PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
@@ -48,7 +48,12 @@ class PokemonSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
           opacity: extendedOpacity,
           child: Padding(
             padding: EdgeInsets.only(top: topPadding + 15),
-            child: _StrokeDecorationText(pokemon: pokemon),
+            child: StrokeDecorationText(
+              text: pokemon.name,
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.25,
+              ),
+            ),
           ),
         ),
         AppBar(
@@ -120,30 +125,6 @@ class _Background extends StatelessWidget {
       decoration: BoxDecoration(
         color: pokemon.types.first.dimColor,
         gradient: _gradient,
-      ),
-    );
-  }
-}
-
-class _StrokeDecorationText extends StatelessWidget {
-  final Pokemon pokemon;
-
-  const _StrokeDecorationText({
-    Key? key,
-    required this.pokemon,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: FittedBox(
-        fit: BoxFit.none,
-        alignment: Alignment.center,
-        child: StrokeFadeOutText(
-          text: pokemon.name.hyphenToPascalWord().toUpperCase(),
-          fontSize: MediaQuery.of(context).size.width * 0.25,
-        ),
       ),
     );
   }

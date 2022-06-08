@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_moves_tab.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pokedex_app/models/pokemon/pokemon.dart';
@@ -8,6 +7,7 @@ import 'package:pokedex_app/repos/pokemons_repo.dart';
 import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_about_tab.dart';
 import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_app_bar_delegate.dart';
 import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_evolution_tab.dart';
+import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_moves_tab.dart';
 import 'package:pokedex_app/screens/pokemon_details/widgets/pokemon_stats_tab.dart';
 import 'package:pokedex_app/widgets/pokeball_loading_indicator.dart';
 

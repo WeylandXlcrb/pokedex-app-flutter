@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class StrokeFadeOutText extends StatelessWidget {
   final String text;
-  final double? fontSize;
   final Color color;
+  final TextStyle? style;
 
   const StrokeFadeOutText({
     Key? key,
     required this.text,
-    this.fontSize,
+    this.style,
     this.color = Colors.white,
   }) : super(key: key);
 
@@ -27,12 +27,11 @@ class StrokeFadeOutText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: fontSize,
           foreground: Paint()
             ..color = color
             ..strokeWidth = 1
             ..style = PaintingStyle.stroke,
-        ),
+        ).merge(style),
       ),
     );
   }
