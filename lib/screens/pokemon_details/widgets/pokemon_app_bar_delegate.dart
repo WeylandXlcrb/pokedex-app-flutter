@@ -207,7 +207,7 @@ class _PokemonRow extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                pokemon.name.capitalize(),
+                pokemon.name.hyphenToPascalWord(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24.0,

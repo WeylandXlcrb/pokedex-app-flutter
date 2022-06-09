@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
+import 'package:pokedex_app/constants.dart';
 import 'package:pokedex_app/models/api_resource.dart';
 import 'package:pokedex_app/models/generation_game_index.dart';
 import 'package:pokedex_app/models/item/item_holder_pokemon.dart';
@@ -67,6 +68,16 @@ abstract class Item implements Built<Item, ItemBuilder> {
 
   /// A list of the machines related to this item.
   BuiltList<MachineVersionDetail> get machines;
+
+  VersionGroupFlavorText get flavorTextDefault => flavorTextEntries.firstWhere(
+        (p0) => p0.language.name == kLanguageCodeDefault,
+        orElse: () => flavorTextEntries.first,
+      );
+
+  VerboseEffect get effectDefault => effectEntries.firstWhere(
+        (p0) => p0.language.name == kLanguageCodeDefault,
+        orElse: () => effectEntries.first,
+      );
 
   Item._();
 
