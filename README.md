@@ -2,7 +2,7 @@
 
 Pokedex App mainly using:
 - `pokeapi.co` as API / remote DB
-- `hive` as time based cache service
+- `hive` as base for time based cache db service
 - `built_value` as json to model serializer
 - `go_router` as navigator
 - other fundamental packages, howdy to them 
