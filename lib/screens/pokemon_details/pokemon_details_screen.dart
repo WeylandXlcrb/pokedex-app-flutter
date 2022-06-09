@@ -87,7 +87,6 @@ class _ScreenBodyState extends State<_ScreenBody>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Find a way to adhere to design
     return NestedScrollView(
       headerSliverBuilder: (context, __) => [
         SliverOverlapAbsorber(

@@ -70,8 +70,8 @@ class _RegionBody extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: kPaddingDefault),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
-          // TODO: normal widget
-                (context, index) => Text(region.pokedexes[index].name),
+                (context, index) =>
+                    Text(region.pokedexes[index].name.hyphenToPascalWord()),
                 childCount: region.pokedexes.length,
               ),
             ),

@@ -12,6 +12,11 @@ class StrokeFadeOutText extends StatelessWidget {
     this.color = Colors.white,
   }) : super(key: key);
 
+  Paint get _paint => Paint()
+    ..color = color
+    ..strokeWidth = 1
+    ..style = PaintingStyle.stroke;
+
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
@@ -26,12 +31,7 @@ class StrokeFadeOutText extends StatelessWidget {
       ).createShader(rect),
       child: Text(
         text,
-        style: TextStyle(
-          foreground: Paint()
-            ..color = color
-            ..strokeWidth = 1
-            ..style = PaintingStyle.stroke,
-        ).merge(style),
+        style: TextStyle(foreground: _paint).merge(style),
       ),
     );
   }

@@ -151,8 +151,7 @@ class _AboutTab extends StatelessWidget {
               ),
               _Group(
                 labelText: 'Introduced in',
-                // TODO: Change to some "beautiful" adapter for generations
-                child: Text(move.generation.name.hyphenToPascalWord()),
+                child: Text(move.generation.name.pretifyGeneration()),
               ),
               if (move.statChanges.isNotEmpty) ...[
                 _Group(

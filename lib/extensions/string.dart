@@ -7,4 +7,14 @@ extension StringEx on String {
 
   String replaceNewLineTo([String replace = ' ']) =>
       isEmpty ? this : replaceAll(RegExp(r'\n'), replace);
+
+  String pretifyGeneration() {
+    if (isEmpty) {
+      return this;
+    }
+
+    final splitStr = split('-');
+
+    return '${splitStr[0].capitalize()} ${splitStr[1].toUpperCase()}';
+  }
 }

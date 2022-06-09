@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 
-import 'package:pokedex_app/screens/generations/generations_screen.dart';
 import 'package:pokedex_app/screens/home/home_screen.dart';
 import 'package:pokedex_app/screens/item_details/item_details_screen.dart';
 import 'package:pokedex_app/screens/items/items_screen.dart';
@@ -48,11 +47,6 @@ final appRouter = GoRouter(
               ),
             ),
           ],
-        ),
-        GoRoute(
-          path: 'generations',
-          name: GenerationsScreen.routeName,
-          builder: (context, state) => const GenerationsScreen(),
         ),
         GoRoute(
           path: 'locations',

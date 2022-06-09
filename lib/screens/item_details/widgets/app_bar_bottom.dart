@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pokedex_app/asset_images.dart';
+import 'package:pokedex_app/colors.dart';
 import 'package:pokedex_app/extensions/string.dart';
 import 'package:pokedex_app/models/item/item.dart';
 import 'package:pokedex_app/widgets/pokemon_image.dart';
@@ -35,8 +36,8 @@ class AppBarBottom extends StatelessWidget implements PreferredSizeWidget {
                 end: Alignment.bottomLeft,
                 stops: const [0, 0.65],
                 colors: [
-                  Colors.white.withOpacity(0.3),
-                  Colors.white.withOpacity(0.02),
+                  CategoryColors.items.withOpacity(0.5),
+                  CategoryColors.items.withOpacity(0.02),
                 ],
               ).createShader(bounds),
               child: Image.asset(
@@ -54,6 +55,7 @@ class AppBarBottom extends StatelessWidget implements PreferredSizeWidget {
                 fontSize: MediaQuery.of(context).size.width * 0.25,
                 letterSpacing: 10,
               ),
+              color: CategoryColors.items,
             ),
           ),
           Center(
