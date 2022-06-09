@@ -204,9 +204,9 @@ class _PokemonLink extends StatelessWidget {
                 duration: _transitionDuration,
                 builder: (_, id, __) => Text(
                   '#${'$id'.padLeft(3, '0')}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 10.0,
-                    color: Color(0xFF666666),
+                    color: Theme.of(context).textTheme.caption?.color,
                   ),
                 ),
               ),

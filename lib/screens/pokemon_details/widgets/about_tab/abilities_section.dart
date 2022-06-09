@@ -56,7 +56,7 @@ class _AbilityTile extends StatelessWidget {
       title: Text(pokeAbility.ability.name.hyphenToPascalWord()),
       collapsedIconColor: color,
       iconColor: Colors.grey,
-      textColor: Colors.black,
+      textColor: Theme.of(context).textTheme.bodyText1?.color,
       tilePadding: EdgeInsets.zero,
       children: [
         FutureBuilder<Ability>(

@@ -58,6 +58,13 @@ class _TypeCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: type.color,
         borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: type.color.withOpacity(0.25),
+            blurRadius: 6,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: LayoutBuilder(

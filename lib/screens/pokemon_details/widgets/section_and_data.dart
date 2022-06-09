@@ -121,7 +121,7 @@ class DataTextValue extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: const TextStyle(color: Color(0xFF666666)),
+      style: TextStyle(color: Theme.of(context).textTheme.caption?.color),
     );
   }
 }

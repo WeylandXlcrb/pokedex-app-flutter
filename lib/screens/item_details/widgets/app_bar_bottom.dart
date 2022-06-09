@@ -22,6 +22,8 @@ class AppBarBottom extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return SizedBox(
       height: _height,
       child: Stack(
@@ -42,7 +44,7 @@ class AppBarBottom extends StatelessWidget implements PreferredSizeWidget {
               ).createShader(bounds),
               child: Image.asset(
                 AssetImages.dotted,
-                width: MediaQuery.of(context).size.width * 0.25,
+                width: size.width * 0.25,
               ),
             ),
           ),
@@ -52,7 +54,7 @@ class AppBarBottom extends StatelessWidget implements PreferredSizeWidget {
             builder: (_, id, __) => StrokeDecorationText(
               text: '#${'$id'.padLeft(3, '0')}',
               style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.25,
+                fontSize: size.width * 0.25,
                 letterSpacing: 10,
               ),
               color: CategoryColors.items,

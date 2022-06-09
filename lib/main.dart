@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Flutter Pokedex',
         theme: appLightTheme(context),
+        darkTheme: appDarkTheme(context),
         routerDelegate: appRouter.routerDelegate,
         routeInformationParser: appRouter.routeInformationParser,
       ),
