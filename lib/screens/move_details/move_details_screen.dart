@@ -40,6 +40,7 @@ class MoveDetailsScreen extends StatelessWidget {
             final move = snapshot.data!;
 
             tabBar = const TabBar(
+              labelColor: Colors.white,
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 4,

@@ -31,6 +31,8 @@ void main() async {
   runApp(const MyApp());
 }
 
+// TODO: web version and icon
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
